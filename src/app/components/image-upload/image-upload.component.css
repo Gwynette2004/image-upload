@@ -1,0 +1,182 @@
+/* Global Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #FF7E5F, #feb47b);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Container */
+.container {
+  width: 90%;
+  max-width: 800px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  animation: fadeIn 1s ease;
+}
+
+/* Row Styles */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.col-8 {
+  flex: 2;
+  padding-right: 10px;
+}
+
+.col-4 {
+  flex: 1;
+  padding-left: 10px;
+}
+
+
+/* Button Styles */
+label.btn {
+  width: 100%;
+  height: 45px;
+  border-radius: 5px;
+  background-color: #ff6b6b;
+  border: none;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  line-height: 45px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+label.btn:hover {
+  background-color: #ff3b3b;
+}
+
+/* Preview Styles */
+.preview {
+  width: 100%;
+  height: 250px;
+  margin: 20px 0;
+  border-radius: 10px;
+  border: 2px dashed #ff6b6b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #ff6b6b;
+}
+
+/* Alert Styles */
+.alert {
+  margin-bottom: 20px;
+}
+
+/* Card Styles */
+.card {
+  margin-bottom: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* List Styles */
+.list-group-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.list-group-item img {
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+  transition: transform 0.3s;
+}
+
+.list-group-item img:hover {
+  transform: scale(1.1);
+}
+
+/* Modal Styles */
+.modal {
+  display: flex;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  position: relative;
+  max-width: 80%;
+  max-height: 80%;
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  animation: slideIn 0.5s ease;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  color: #333;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Return Button */
+.return-button {
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.return-button:hover {
+  background-color: #ff3b3b;
+}

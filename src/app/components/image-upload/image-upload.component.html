@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+      <input type="file" accept="image/*" (change)="selectFile($event)" />
+      <button class="btn btn-success btn-sm" [disabled]="!currentFile" (click)="upload()">Upload</button>
+      <button class="btn btn-secondary btn-sm" [disabled]="!currentFile" (click)="cancel()">Cancel</button>
+
+      <div *ngIf="preview">
+        <app-image-editor [image]="preview"></app-image-editor>
+      </div>
+
+      <div *ngIf="message">
+        <div class="alert alert-secondary" role="alert">{{ message }}</div>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">List of Images</div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" *ngFor="let image of imageInfos | async">
+            <p>{{ image.imgName }}</p>
+            <img 
+              [src]="image.img" 
+              alt="{{ image.imgName }}" 
+              height="80px" 
+              (click)="openPreview(image.img)" 
+              style="cursor: pointer;" 
+            />
+            <button (click)="deleteImage(image.id)" class="btn btn-danger btn-sm">Delete</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Image Preview -->
+  <div class="modal" *ngIf="selectedImage">
+    <div class="modal-content">
+      <span (click)="closePreview()" class="close">&times;</span>
+      <img [src]="selectedImage" class="modal-image" />
+      <button (click)="closePreview()" class="btn btn-primary return-button">Return</button>
+    </div>
+  </div>
+</div>
