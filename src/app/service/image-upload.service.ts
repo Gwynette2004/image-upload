@@ -1,35 +1,37 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImageUploadService {
-  private baseUrl = 'http://localhost:3000/modules';  // Change this to your server URL
+  private baseUrl = 'http://localhost/ImageApi/modules';
 
   constructor(private http: HttpClient) {}
 
-  upload(file: File): Observable<HttpEvent<any>> {
-    const formData: FormData = new FormData();
-    formData.append('image', file);  // Make sure the name matches 'image' in the PHP script
+  upload(file: File): Observable<any> {
+  const formData: FormData = new FormData();
+  formData.append('image', file);
 
-    const req = new HttpRequest('POST', `${this.baseUrl}/post.php`, formData, {
-      reportProgress: true,
-      responseType: 'json'
-    });
-
-    return this.http.request(req);
-  }
-
-  getFiles(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/get.php`);
-  }
-
-  deleteImage(id: number): Observable<any> {
-    return this.http.delete(`http://localhost:3000/modules/delete.php?id=${id}`);
+  return this.http.post(`${this.baseUrl}/addimage`, formData, {
+    reportProgress: true,
+    observe: 'events',
+    responseType: 'json'
+  })
 }
 
-
-
+  getFiles(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/getimages`).pipe(
+      catchError(error => {
+        console.error('Fetch error:', error);
+        return throwError(error);
+      })
+    );
+  }
+  deleteImage(id: number): Observable<any> {
+    const url = `http://localhost/ImageApi/modules/delete.php?id=${id}`;
+    return this.http.delete(url);
+  }
 }

@@ -1,182 +1,244 @@
-/* Global Styles */
-body {
+/* General Styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.h1 {
   font-family: 'Poppins', sans-serif;
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(135deg, #FF7E5F, #feb47b);
-  height: 100vh;
+  color: #667BC6;
+  font-weight: 800;
+  margin-bottom: 550px;
+  margin-right: 600px;
+  position: relative;
+}
+
+.card-header {
+  background-color: #667BC6;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+}
+
+.card {
+  border: #667BC6 2px solid;
+}
+
+.insert {
+  font-family: 'Poppins', sans-serif;
+  color: #667BC6;
+  font-weight: 700;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-size: cover; /* Optional: ensures the background covers the entire area */
+  background-position: center; /* Optional: centers the background image */
+  background-repeat: no-repeat; /* Optional: prevents the background from repeating */
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
 }
 
-/* Container */
+/* Container Styles */
 .container {
-  width: 90%;
-  max-width: 800px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  animation: fadeIn 1s ease;
+  border: #667BC6 3px solid;
+  background-color: white;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem; /* Increased padding for better spacing */
+  border-radius: 15px; /* Slightly larger border-radius for a softer look */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* More prominent shadow */
+  box-sizing: border-box; /* Ensures padding does not affect the overall width */
+  position: absolute;
 }
 
-/* Row Styles */
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
+/* Title Styles */
+.title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Slightly more pronounced text shadow */
 }
 
-.col-8 {
-  flex: 2;
-  padding-right: 10px;
+/* Custom File Upload Button Styles */
+.custom-file-upload {
+  display: inline-block;
+  padding: 12px 24px; /* Slightly larger padding for better usability */
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border-radius: 25px;
+  margin-right: 12px; /* Increased margin for better spacing */
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
-.col-4 {
-  flex: 1;
-  padding-left: 10px;
+.custom-file-upload:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
+/* File Input Styles */
+.file-input {
+  display: none;
+}
+
+/* Drag and Drop Area Styles */
+.drag-drop-area {
+  border: 2px dashed #007bff;
+  padding: 40px; /* Increased padding for a more spacious feel */
+  text-align: center;
+  transition: background-color 0.3s ease-in-out;
+  cursor: pointer;
+  border-radius: 15px; /* Match the container border-radius for consistency */
+  position: relative; /* Ensure the preview box is positioned relative to this container */
+}
+
+/* Drag Over State */
+.drag-drop-area.drag-over {
+  background-color: #e9f7ff;
+}
+
+/* Preview Box Styles */
+.preview-box {
+  margin-top: 2rem; /* Increased margin for better separation */
+  text-align: center; /* Center the preview box content */
+  max-width: 100%; /* Ensure the box does not exceed the container's width */
+  overflow: hidden; /* Hide overflowed parts of the image */
+  position: relative; /* Ensure the image is positioned within the box */
+}
+
+/* Preview Image Styles */
+.preview-image {
+  max-width: 50%; /* Set max-width to 50% */
+  max-height: 50%; /* Set max-height to 50% */
+  width: auto; /* Ensure width scales proportionally */
+  height: auto; /* Ensure height scales proportionally */
+  display: block;
+  margin: 0 auto; /* Center the image */
+  border-radius: 15px; /* Match the container and drag-drop area border-radius */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* More prominent shadow */
+  transition: transform 0.3s ease-in-out;
+  object-fit: contain; /* Fit the image within its container */
+}
+
+.preview-image:hover {
+  transform: scale(1.1);
+}
 
 /* Button Styles */
-label.btn {
-  width: 100%;
-  height: 45px;
-  border-radius: 5px;
-  background-color: #ff6b6b;
+.btn {
+  margin-top: 12px; /* Increased margin for better spacing */
+  padding: 12px 24px; /* Slightly larger padding for better usability */
   border: none;
+  border-radius: 25px;
+  background-color: #28a745;
   color: white;
-  font-weight: bold;
-  text-align: center;
-  line-height: 45px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
-label.btn:hover {
-  background-color: #ff3b3b;
+.btn:hover {
+  background-color: #218838;
+  transform: scale(1.05);
 }
 
-/* Preview Styles */
-.preview {
-  width: 100%;
-  height: 250px;
-  margin: 20px 0;
-  border-radius: 10px;
-  border: 2px dashed #ff6b6b;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-  color: #ff6b6b;
+.btn-success {
+  background-color: #667BC6;
 }
 
-/* Alert Styles */
-.alert {
-  margin-bottom: 20px;
+.btn-secondary {
+  background-color: #DA7297;
 }
 
-/* Card Styles */
-.card {
-  margin-bottom: 20px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  overflow: hidden;
-  transition: transform 0.3s;
+.btn-danger {
+  background-color: #DA7297;
+  margin-left: 10px;
 }
 
-.card:hover {
-  transform: translateY(-5px);
+/* Adding space between buttons */
+.btn + .btn {
+  margin-left: 12px; /* Increased margin for better spacing */
 }
 
-/* List Styles */
-.list-group-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+.rotare {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.list-group-item img {
-  width: 60px;
-  height: 60px;
-  border-radius: 5px;
-  transition: transform 0.3s;
+.rotare .btn-info {
+  background-color: #667BC6;
 }
 
-.list-group-item img:hover {
-  transform: scale(1.1);
+.rotare .btn-warning {
+  background-color: #DA7297;
+}
+
+.colore .btn-secondary {
+  background-color: #fee58c;
+}
+
+.colore .btn-warning {
+  background-color: #DA7297;
+}
+
+.shate {
+  margin-top: 10px;
 }
 
 /* Modal Styles */
 .modal {
-  display: flex;
-  position: fixed;
-  z-index: 1;
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
   left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.8);
-  align-items: center;
-  justify-content: center;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.5); /* Slightly darker background for better contrast */
 }
 
+/* Modal Content Styles */
 .modal-content {
-  position: relative;
-  max-width: 80%;
-  max-height: 80%;
-  background: white;
-  border-radius: 10px;
+  background-color: #fefefe;
+  margin: 10% auto; /* Adjusted margin for better centering */
   padding: 20px;
-  animation: slideIn 0.5s ease;
+  border: 1px solid #888;
+  width: 70%; /* Adjusted width for better responsiveness */
+  border-radius: 15px; /* Match the container border-radius */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* More prominent shadow */
 }
 
+/* Close Button Styles */
 .close {
-  position: absolute;
-  top: 15px;
-  right: 25px;
-  color: #333;
-  font-size: 30px;
+  color: #aaa;
+  float: right;
+  font-size: 32px; /* Larger close button for better accessibility */
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
   cursor: pointer;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+/* Cropper Container Styles */
+.cropper-container {
+  width: 100%;
+  height: 400px;
+  position: relative;
 }
 
-@keyframes slideIn {
-  from {
-    transform: translateY(-50%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+.cropper-image {
+  max-width: 100%;
+  max-height: 400px;
 }
 
-/* Return Button */
-.return-button {
-  margin: 20px auto;
-  padding: 10px 20px;
-  background-color: #ff6b6b;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.return-button:hover {
-  background-color: #ff3b3b;
+.preview-image {
+  transition: filter 0.3s ease, transform 0.3s ease;
 }

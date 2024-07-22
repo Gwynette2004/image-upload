@@ -1,45 +1,76 @@
-<div class="container">
-  <div class="row">
-    <div class="col-8">
-      <input type="file" accept="image/*" (change)="selectFile($event)" />
-      <button class="btn btn-success btn-sm" [disabled]="!currentFile" (click)="upload()">Upload</button>
-      <button class="btn btn-secondary btn-sm" [disabled]="!currentFile" (click)="cancel()">Cancel</button>
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
 
-      <div *ngIf="preview">
-        <app-image-editor [image]="preview"></app-image-editor>
+<body>
+  <h1 class="h1">IMAGE UPLOAD</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-8">
+        <h3 class="insert">INSERT FILE HERE</h3>
+
+        <!-- Drag and Drop Area -->
+        <div
+          class="drag-drop-area"
+          (dragover)="onDragOver($event)"
+          (dragleave)="onDragLeave($event)"
+          (drop)="onDrop($event)"
+          [class.drag-over]="isDragOver"
+        >
+        <p>Drag and drop an image here, or</p>
+
+        <!-- Show the "Choose File" button and input field only if no image is being previewed -->
+        <label *ngIf="!preview" for="file-input" class="custom-file-upload">Choose File</label>
+        <input *ngIf="!preview" type="file" id="file-input" accept="image/*" (change)="selectFile($event)" class="file-input"/>
+        
+        <!-- Preview box inside drag-and-drop area, shown only when there is a preview image -->
+        <img *ngIf="preview" [src]="preview" class="preview-box" alt="Preview"/>
+      
+        </div>
+
+        <!-- Buttons remain outside of the drag-and-drop area -->
+        <button class="btn btn-success btn-sm" (click)="upload()" (click)="onreload()">Upload</button>
+        <button class="btn btn-secondary btn-sm" (click)="cancelEdit()">Cancel</button>
       </div>
 
-      <div *ngIf="message">
-        <div class="alert alert-secondary" role="alert">{{ message }}</div>
-      </div>
-    </div>
-
-    <div class="col-4">
-      <div class="card">
-        <div class="card-header">List of Images</div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item" *ngFor="let image of imageInfos | async">
-            <p>{{ image.imgName }}</p>
-            <img 
-              [src]="image.img" 
-              alt="{{ image.imgName }}" 
-              height="80px" 
-              (click)="openPreview(image.img)" 
-              style="cursor: pointer;" 
-            />
-            <button (click)="deleteImage(image.id)" class="btn btn-danger btn-sm">Delete</button>
-          </li>
-        </ul>
+      <div class="col-4">
+        <div class="card">
+          <div class="card-header">List of Images</div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let image of imageInfos | async">
+              <p>{{ image.imgName }}</p>
+              <img [src]="getImageUrl(image.img)" alt="{{ image.imgName }}" height="80px" (click)="openPreview(getImageUrl(image.img))" style="cursor: pointer;" />
+              <button (click)="deleteImage(image.id)" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Modal for Image Preview -->
-  <div class="modal" *ngIf="selectedImage">
+  <!-- Preview Modal -->
+  <div id="previewModal" class="modal">
     <div class="modal-content">
-      <span (click)="closePreview()" class="close">&times;</span>
-      <img [src]="selectedImage" class="modal-image" />
-      <button (click)="closePreview()" class="btn btn-primary return-button">Return</button>
+      <span class="close" (click)="closePreview()">&times;</span>
+      <img [src]="selectedImage" class="preview-image" [ngStyle]="{'filter': currentFilter}" alt="Selected Image"/>
+      <div class="modal-actions">
+       <div class="rotare">
+        <h3 class="insert">Try Rotate</h3>
+        <button class="btn btn-info btn-sm" (click)="rotatePreviewImage()" [disabled]="!selectedImage">Rotate</button>
+        <button class="btn btn-warning btn-sm" (click)="resetPreviewImage()" [disabled]="!selectedImage">Reset</button>
+      </div>
+      <div class="colore">
+        <h3 class="insert">Try Colour Filter</h3>
+        <button class="btn btn-secondary btn-sm" (click)="applyFilter('grayscale(100%)')" [disabled]="!selectedImage">Grayscale</button>
+        <button class="btn btn-secondary btn-sm" (click)="applyFilter('sepia(100%)')" [disabled]="!selectedImage">Sepia</button>
+        <button class="btn btn-secondary btn-sm" (click)="applyFilter('invert(100%)')" [disabled]="!selectedImage">Invert</button>
+        <button class="btn btn-warning btn-sm" (click)="applyFilter('none')" [disabled]="!selectedImage">Reset</button>
+      </div> 
+        <div class="shate">
+        <h3 class="insert">Share</h3>
+        <button class="btn btn-primary btn-sm" (click)="shareImage()" [disabled]="!selectedImage">Share</button>
+      </div>
+      </div>
     </div>
   </div>
-</div>
+</body>

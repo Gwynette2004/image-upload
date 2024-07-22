@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ImageUploadService {
-  private baseUrl = 'http://localhost3000/modules/';  // Adjust this to your server URL
+  private baseUrl = 'http://localhost/ImageApi/module';  // Corrected the base URL
 
   constructor(private http: HttpClient) {}
 
@@ -14,7 +14,7 @@ export class ImageUploadService {
     const formData: FormData = new FormData();
     formData.append('image', file);  // Make sure the key matches the expected key in your PHP script
 
-    const req = new HttpRequest('POST', `${this.baseUrl}/post.php`, formData, {
+    const req = new HttpRequest('POST', `${this.baseUrl}/addimage`, formData, {
       reportProgress: true,
       responseType: 'json'
     });
@@ -23,6 +23,6 @@ export class ImageUploadService {
   }
 
   getFiles(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/get.php`);
+    return this.http.get(`${this.baseUrl}/getimages`);
   }
 }
