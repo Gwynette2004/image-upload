@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImageUploadService {
-  private baseUrl = 'http://localhost/ImageApi/modules';
+  private baseUrl = 'http://localhost/ImageApi';
 
   constructor(private http: HttpClient) {}
 
@@ -30,8 +30,51 @@ export class ImageUploadService {
       })
     );
   }
+
   deleteImage(id: number): Observable<any> {
-    const url = `http://localhost/ImageApi/modules/delete.php?id=${id}`;
+    const url = `http://localhost/ImageApi/delete?id=${id}`;
+    console.log('Sending delete request to:', url);
     return this.http.delete(url);
+  }
+
+  userLogin(data: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/login`, data)
+      .pipe(
+        tap((response: any) => {
+          console.log('userLogin response:', response);
+          // Handle storing user_id in the component where this method is called
+        }),
+        catchError(this.handleError)
+      );
+  }
+      // return this.http.post(`${this.baseUrl}/addimage`, formData, {
+      //   reportProgress: true,
+      //   observe: 'events',
+      //   responseType: 'json'
+      // })
+
+  userSignUp(data: any): Observable<any> {
+    console.log(`${this.baseUrl}/signup`)
+    return this.http.post<any>(`${this.baseUrl}/signup`, data)
+      .pipe(
+        tap(response => {
+          console.log('userSignUp response:', response);
+        }),
+        catchError(this.handleError)
+      );
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // Client-side or network error occurred.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // Backend returned an unsuccessful response code.
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${JSON.stringify(error.error)}`);
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(() => new Error('Something went wrong. Please try again later.'));
   }
 }

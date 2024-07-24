@@ -1,13 +1,12 @@
-/* General Styles */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 .h1 {
   font-family: 'Poppins', sans-serif;
   color: #667BC6;
   font-weight: 800;
-  margin-bottom: 550px;
-  margin-right: 600px;
-  position: relative;
+  margin-left: 40px;
+  margin-bottom: 600px;
+  margin-right: 0px;
 }
 
 .card-header {
@@ -27,6 +26,15 @@
   font-weight: 700;
 }
 
+.insertN {
+  font-size: 30px;
+  font-family: 'Poppins', sans-serif;
+  color: #3a57bf;
+  font-weight: 700;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 body {
   font-family: 'Arial', sans-serif;
   background-size: cover; /* Optional: ensures the background covers the entire area */
@@ -37,7 +45,6 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-  overflow: hidden;
 }
 
 /* Container Styles */
@@ -51,7 +58,6 @@ body {
   border-radius: 15px; /* Slightly larger border-radius for a softer look */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* More prominent shadow */
   box-sizing: border-box; /* Ensures padding does not affect the overall width */
-  position: absolute;
 }
 
 /* Title Styles */
@@ -241,4 +247,78 @@ body {
 
 .preview-image {
   transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.col-4 {
+  right: 970px;
+  transform: translateX(-50%);
+  width: 100%; /* Adjust width as necessary */
+  max-width: 300px; /* Adjust max-width as needed */
+  top: 700px;
+  position: relative;
+}
+
+.card {
+  width: 1300px;
+  margin-top: 300px;
+}
+
+.image-container {
+  display: inline-block;
+  margin-left: 30px;
+  margin-top: 30px;
+  border-radius: 20px;
+  width: 220px; /* Fixed width */
+  height: 300px; /* Fixed height */
+  overflow: hidden; /* Hide overflow */
+  position: relative; /* Ensure the trash icon is positioned correctly */
+  transition: transform 0.3s ease-in-out; /* Add transition for scaling effect */
+}
+
+.image-item {
+  cursor: pointer;
+  display: block;
+  width: 100%; /* Ensure the image fits the container's width */
+  height: 100%; /* Ensure the image fits the container's height */
+  object-fit: cover; /* Scale the image to cover the container */
+  transition: transform 0.3s ease-in-out; /* Add transition for scaling effect */
+}
+
+.trash-icon {
+  position: absolute;
+  top: 10px; /* Adjust the position as needed */
+  right: 10px; /* Adjust the position as needed */
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; /* Add transition for opacity and scaling effect */
+  z-index: 1;
+}
+
+.image-container:hover .trash-icon {
+  display: block;
+  opacity: 1;
+  transform: scale(1.2); /* Scale up the icon on hover */
+}
+
+.image-container:hover .image-item {
+  transform: scale(1.05); /* Slightly scale up the image on hover */
+}
+
+.no-image {
+  display: none;
+}
+
+.filerow {
+  margin-top: 10px;
+}
+
+.preview-image {
+  transition: filter 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.croppped {
+  border: 1px solid #999;
+  border-radius: 10px;
+  padding: 10px;
 }

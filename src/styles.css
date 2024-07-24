@@ -1,3 +1,5 @@
 body{
-    background-image: url('./assets/blue.png');
+    background: linear-gradient(135deg, #eaeeff, #ffffff); /* Adjust the second color as needed */
+    top: 0;
+    left: 0;
 }
