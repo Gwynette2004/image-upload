@@ -45,17 +45,17 @@ export class ImageUploadComponent implements OnInit, AfterViewInit, OnDestroy {
     private uploadService: ImageUploadService,
     private commentService: CommentService,
     private sanitizer: DomSanitizer,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.refreshImageList();
-    this.loadComments();
     this.currentUserId = Number(sessionStorage.getItem('currentUserId'));
     if (isNaN(this.currentUserId)) {
       console.error('User ID not found or invalid.');
       this.currentUserId = null;
     }
+    
   }
 
   ngAfterViewInit(): void {}
@@ -163,6 +163,7 @@ export class ImageUploadComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+
   getImageUrl(imageName: string): string {
     return `${this.baseUrl}${imageName}`;
   }
@@ -191,29 +192,38 @@ export class ImageUploadComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-
   openPreview(imgUrl: string, imgName: string, imgId: number): void {
     console.log('Opening preview with:');
-  console.log('Image URL:', imgUrl);   // Log the image URL
-  console.log('Image Name:', imgName); // Log the image name
-  console.log('Image ID:', imgId);     // Log the image ID
+    console.log('Image URL:', imgUrl);   // Log the image URL
+    console.log('Image Name:', imgName); // Log the image name
+    console.log('Image ID:', imgId);     // Log the image ID
 
-  if (!imgUrl || !imgName || !imgId) {
-    console.error('Invalid parameters passed to openPreview:', imgUrl, imgName, imgId);
-    return;
-  }
+    if (!imgUrl || !imgName || !imgId) {
+      console.error('Invalid parameters passed to openPreview:', imgUrl, imgName, imgId);
+      return;
+    }
 
-  this.selectedImage = imgUrl;        // Set the image URL for the preview
-  this.selectedImageName = imgName;   // Set the image name for the preview
-  this.selectedImageId = imgId;       // Set the image ID for the preview
-  this.rotation = 0;                  // Reset rotation when opening preview
-  this.currentFilter = 'none';        // Reset filter when opening preview
+    this.selectedImage = imgUrl;        // Set the image URL for the preview
+    this.selectedImageName = imgName;   // Set the image name for the preview
+    this.selectedImageId = imgId;       // Set the image ID for the preview
+    this.rotation = 0;                  // Reset rotation when opening preview
+    this.currentFilter = 'none';        // Reset filter when opening preview
 
-  this.showModal('previewModal');     // Show the modal
+    this.showModal('previewModal');     // Show the modal
 
-  this.loadComments();                // Load comments for the selected image
-  }
-  
+    // Ensure this code runs after the modal is fully visible
+    setTimeout(() => {
+        if (this.uploadedImage && this.uploadedImage.nativeElement) {
+            console.log('Preview image element:', this.uploadedImage.nativeElement);
+        } else {
+            console.error('Uploaded image element not found in preview modal.');
+        }
+    }, 500); // Adjust the timeout as needed
+
+    this.loadComments();                // Load comments for the selected image
+}
+
+
   
   closePreview(): void {
     this.selectedImage = null;
@@ -259,7 +269,50 @@ export class ImageUploadComponent implements OnInit, AfterViewInit, OnDestroy {
 
   applyFilter(filter: string): void {
     this.currentFilter = filter;
+    console.log('Applying filter:', filter); // Log the filter being applied
+    if (this.uploadedImage) {
+        this.uploadedImage.nativeElement.style.filter = filter;
+    } else {
+        console.error('Uploaded image element not found for applying filter.');
+    }
+}
+applyChanges(): void {
+  if (this.selectedImageId !== null) {
+    const filterData = {
+      imageId: this.selectedImageId,
+      filter: this.currentFilter,
+      rotation: this.rotation // Include rotation if applicable
+    };
+
+    console.log('Applying changes with filter data:', filterData);
+
+    this.uploadService.updateImage(filterData).subscribe({
+      next: (response) => {
+        console.log('Server response:', response);
+        if (response.status.remarks === 'success') {
+          this.message = 'Filter applied successfully.';
+          
+          // Set the URL fragment with the selected image ID
+          window.location.hash = `modal-${this.selectedImageId}`;
+          
+          // Reload the page
+          window.location.reload();
+        } else {
+          this.message = response.status.message || 'Failed to apply filter.';
+        }
+      },
+      error: (err) => {
+        console.error('Error applying filter:', err);
+        this.message = 'An error occurred while applying the filter.';
+      }
+    });
+  } else {
+    this.message = 'No image selected or invalid image ID.';
   }
+}
+
+
+
 
   private showModal(modalId: string): void {
     const modal = document.getElementById(modalId) as HTMLElement;
@@ -283,9 +336,22 @@ export class ImageUploadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onreload() {
-    window.location.reload()
+    window.location.reload();
   }
   
+  // Fetch updated image after update
+  private fetchUpdatedImage(): void {
+    if (this.selectedImageId !== null) {
+      this.uploadService.getFiles().subscribe({
+        next: (response) => {
+          if (response.status === 'success') {
+            this.refreshImageList(); // Refresh image list to show updated image
+          }
+        },
+        error: (err) => console.error('Error fetching updated image:', err)
+      });
+    }
+  }
 
   // THIS ONE IS FETCHING THE COMMENTS
   loadComments(): void {
@@ -302,7 +368,6 @@ export class ImageUploadComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     }
   }
-  
   
   // Method to add comment
   addComment(): void {
@@ -332,4 +397,4 @@ export class ImageUploadComponent implements OnInit, AfterViewInit, OnDestroy {
       console.error('No image selected or user not logged in.');
     }
   }  
-}  
+}

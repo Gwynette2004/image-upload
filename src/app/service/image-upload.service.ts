@@ -53,6 +53,12 @@ export class ImageUploadService {
       //   responseType: 'json'
       // })
 
+
+      updateImage(data: { imageId: number; filter: string; rotation: number }): Observable<any> {
+        console.log('Sending update image request:', data); // Log the request data
+        return this.http.post<any>(`${this.baseUrl}/updateimage`, data);
+      }
+
   userSignUp(data: any): Observable<any> {
     console.log(`${this.baseUrl}/signup`)
     return this.http.post<any>(`${this.baseUrl}/signup`, data)
@@ -64,6 +70,15 @@ export class ImageUploadService {
       );
   }
 
+  getUpdatedImage(id: number): Observable<Blob> {
+    return this.http.get(`${this.baseUrl}/getupdatedimage/${id}`, { responseType: 'blob' }).pipe(
+      catchError(error => {
+        console.error('Fetch updated image error:', error);
+        return throwError(error);
+      })
+    );
+  }
+  
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // Client-side or network error occurred.

@@ -1,7 +1,6 @@
 <head>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
-
 <body>
   <h1 class="h1">IMAGE UPLOAD</h1>
   <div class="container">
@@ -28,8 +27,20 @@
         </div>
 
         <!-- Buttons remain outside of the drag-and-drop area -->
-        <button class="btn btn-success btn-sm" (click)="upload()" (click)="onreload()">Upload</button>
+        <button class="btn btn-success btn-sm" (click)="upload(); onreload()">Upload</button>
         <button class="btn btn-secondary btn-sm" (click)="cancelEdit()">Cancel</button>
+      </div>
+
+      <div class="col-4">
+        <div class="card">
+          <div class="card-header">List of Images</div>
+          <div class="card-container"> <!-- Flexbox container for images -->
+            <div class="image-container" *ngFor="let image of imageInfos | async">
+              <img [src]="getImageUrl(image.img)" alt="{{ image.imgName }}" height="80px" (click)="openPreview(getImageUrl(image.img), image.imgName, image.id)" class="image-item"/>
+              <button (click)="deleteImage(image.id); onreload()" class="btn btn-danger btn-sm trash-icon"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -37,27 +48,28 @@
   <!-- Preview Modal -->
   <div id="previewModal" class="modal">
     <div class="modal-content">
-      <span class="close" (click)="closePreview()">&times;</span>
-      <img [src]="selectedImage" class="preview-image" [ngStyle]="{'filter': currentFilter}" alt="Selected Image"/>
-      <p class="insertN">{{ selectedImageName }}</p> <!-- Display the image name here -->
-      <div class="modal-actions">
-        <div class="rotate">
-          <h3 class="insert">Try Rotate</h3>
-          <button class="rotateB" (click)="rotatePreviewImage()" [disabled]="!selectedImage">Rotate</button>
-          <button class="rotateR" (click)="resetPreviewImage()" [disabled]="!selectedImage"><i class="fa-solid fa-rotate-left"></i></button>
+        <span class="close" (click)="closePreview()">&times;</span>
+        <img #uploadedImage [src]="selectedImage" class="preview-image" [ngStyle]="{'filter': currentFilter}" alt="Selected Image"/>
+        <p class="insertN">{{ selectedImageName }}</p> <!-- Display the image name here -->
+        <div class="modal-actions">
+            <div class="rotate">
+                <h3 class="insert">Try Rotate</h3>
+                <button class="rotateB" (click)="rotatePreviewImage()" [disabled]="!selectedImage">Rotate</button>
+                <button class="rotateR" (click)="resetPreviewImage()" [disabled]="!selectedImage"><i class="fa-solid fa-rotate-left"></i></button>
+            </div>
+            <div class="color">
+                <h3 class="insert">Try Colour Filter</h3>
+                <button class="grey" (click)="applyFilter('grayscale(100%)')" [disabled]="!selectedImage">Grayscale</button>
+                <button class="sepia" (click)="applyFilter('sepia(100%)')" [disabled]="!selectedImage">Sepia</button>
+                <button class="inv" (click)="applyFilter('invert(100%)')" [disabled]="!selectedImage">Invert</button>
+                <button class="colorR" (click)="applyFilter('none')" [disabled]="!selectedImage"><i class="fa-solid fa-rotate-left"></i></button>
+                <button class="btn btn-primary" (click)="applyChanges()" [disabled]="!selectedImage">Apply Changes</button>
+            </div>q
+            <div class="share">
+                <button class="shareB" (click)="shareImage()" [disabled]="!selectedImage"><i class="fa-solid fa-share"></i></button>
+            </div>
         </div>
-        <div class="color">
-          <h3 class="insert">Try Colour Filter</h3>
-          <button class="grey" (click)="applyFilter('grayscale(100%)')" [disabled]="!selectedImage">Grayscale</button>
-          <button class="sepia" (click)="applyFilter('sepia(100%)')" [disabled]="!selectedImage">Sepia</button>
-          <button class="inv" (click)="applyFilter('invert(100%)')" [disabled]="!selectedImage">Invert</button>
-          <button class="colorR" (click)="applyFilter('none')" [disabled]="!selectedImage"><i class="fa-solid fa-rotate-left"></i></button>
-        </div>
-        <div class="share">
-          <button class="shareB" (click)="shareImage()" [disabled]="!selectedImage"><i class="fa-solid fa-share"></i></button>
-        </div>
-      </div>
-      
+
       <!-- Comments Section -->
       <div class="comments-section">
         <h3 class="insert">Comments</h3>
@@ -68,18 +80,6 @@
         </ul>
         <input type="text" [(ngModel)]="newComment" placeholder="Add a comment" />
         <button (click)="addComment()">Add Comment</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-4">
-    <div class="card">
-      <div class="card-header">List of Images</div>
-      <div class="card-container"> <!-- Flexbox container for images -->
-        <div class="image-container" *ngFor="let image of imageInfos | async">
-          <img [src]="getImageUrl(image.img)" alt="{{ image.imgName }}" height="80px" (click)="openPreview(getImageUrl(image.img), image.imgName, image.id)" class="image-item"/>
-          <button (click)="deleteImage(image.id)" (click)="onreload()" class="btn btn-danger btn-sm trash-icon"><i class="fa-solid fa-trash"></i></button>
-        </div>
       </div>
     </div>
   </div>
