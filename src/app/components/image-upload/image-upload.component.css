@@ -1,324 +1,530 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-.h1 {
-  font-family: 'Poppins', sans-serif;
-  color: #667BC6;
-  font-weight: 800;
-  margin-left: 40px;
-  margin-bottom: 600px;
-  margin-right: 0px;
-}
-
-.card-header {
-  background-color: #667BC6;
-  color: white;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 700;
-}
-
-.card {
-  border: #667BC6 2px solid;
-}
-
-.insert {
-  font-family: 'Poppins', sans-serif;
-  color: #667BC6;
-  font-weight: 700;
-}
-
-.insertN {
-  font-size: 30px;
-  font-family: 'Poppins', sans-serif;
-  color: #3a57bf;
-  font-weight: 700;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
+/* General Styles */
 body {
-  font-family: 'Arial', sans-serif;
-  background-size: cover; /* Optional: ensures the background covers the entire area */
-  background-position: center; /* Optional: centers the background image */
-  background-repeat: no-repeat; /* Optional: prevents the background from repeating */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(45deg, #180161, #4F1787, #EB3678, #FB773C);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
 }
 
-/* Container Styles */
-.container {
-  border: #667BC6 3px solid;
-  background-color: white;
-  max-width: 900px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 2rem; /* Increased padding for better spacing */
-  border-radius: 15px; /* Slightly larger border-radius for a softer look */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* More prominent shadow */
-  box-sizing: border-box; /* Ensures padding does not affect the overall width */
+button {
+  background: none; /* Remove background color */
+  border: none;     /* Remove border */
+  color: inherit;   /* Inherit text color from parent */
+  font: inherit;    /* Inherit font styles from parent */
+  cursor: pointer;  /* Change cursor to pointer */
+  padding: 0;       /* Remove padding */
+  margin: 0;        /* Remove margin */
+  text-align: left; /* Align text to the left */
 }
 
-/* Title Styles */
-.title {
-  font-size: 2.5rem;
+h1.h1 {
   text-align: center;
-  margin-bottom: 1.5rem;
   color: #333;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Slightly more pronounced text shadow */
+  margin-top: 20px;
 }
 
-/* Custom File Upload Button Styles */
-.custom-file-upload {
-  display: inline-block;
-  padding: 12px 24px; /* Slightly larger padding for better usability */
-  cursor: pointer;
-  background-color: #007bff;
+.container {
+  max-width: 1450px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: black;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6); /* Darker shadow around the container */
+  color: black;
+  border-radius: 20px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.create {
+  text-decoration: none;
+  background-color: transparent; /* Transparent background */
+  color: #007bff; /* Custom text color */
+  font-size: 14px; /* Font size */
+  padding: 10px;   /* Custom padding */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.logout {
+  text-decoration: none;
+  background-color: transparent; /* Transparent background */
+  color: #007bff; /* Custom text color */
+  font-size: 14px; /* Font size */
+  padding: 10px;   /* Custom padding */
+  border-radius: 5px; /* Rounded corners */
+}
+
+/* Container for the header row */
+.header-row {
+  display: flex;
+  align-items: center; /* Align items vertically center */
+  justify-content: space-between; /* Space out the items */
+  padding: 10px 20px; /* Adjust padding as needed */
+  background-color: black; /* Background color for the header */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Bottom shadow */
+}
+
+.header-row h1 {
+  font-size: 40px; /* Adjust size as needed */
+  font-weight: bold; /* Optional: make the text bold */
+  background: linear-gradient(45deg, #180161, #4F1787, #EB3678, #FB773C);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* Standard for browsers that support it */
+}
+
+.header-row .create,
+.header-row .logout {
+  text-decoration: none;
+  background-color: transparent;
+  color: #007bff;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 5px;
+  margin-left: 10px; /* Space between buttons */
+}
+
+/* Adjust button hover effects if needed */
+.header-row .create:hover,
+.header-row .logout:hover {
+  color: #0056b3; /* Change color on hover */
+}
+
+.fa-solid{
+  font-size: 30px;
+  color: #EB3678;
+}
+
+.fa-trash {
+  font-size: 15px;
   color: white;
-  border-radius: 25px;
-  margin-right: 12px; /* Increased margin for better spacing */
-  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+/* Drag and Drop Area */
+.drag-drop-area {
+  border: 2px dashed #ccc;
+  padding: 20px;
+  text-align: center;
+  transition: border-color 0.3s;
 }
 
-.custom-file-upload:hover {
-  background-color: #0056b3;
-  transform: scale(1.05);
+.drag-drop-area.drag-over {
+  border-color: #00f;
 }
 
-/* File Input Styles */
+.custom-file-upload {
+  cursor: pointer;
+  background: #007bff;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
 .file-input {
   display: none;
 }
 
-/* Drag and Drop Area Styles */
-.drag-drop-area {
-  border: 2px dashed #007bff;
-  padding: 40px; /* Increased padding for a more spacious feel */
-  text-align: center;
-  transition: background-color 0.3s ease-in-out;
-  cursor: pointer;
-  border-radius: 15px; /* Match the container border-radius for consistency */
-  position: relative; /* Ensure the preview box is positioned relative to this container */
+.preview-boxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-/* Drag Over State */
-.drag-drop-area.drag-over {
-  background-color: #e9f7ff;
-}
-
-/* Preview Box Styles */
 .preview-box {
-  margin-top: 2rem; /* Increased margin for better separation */
-  text-align: center; /* Center the preview box content */
-  max-width: 100%; /* Ensure the box does not exceed the container's width */
-  overflow: hidden; /* Hide overflowed parts of the image */
-  position: relative; /* Ensure the image is positioned within the box */
+  max-width: 100px;
+  max-height: 100px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
-/* Preview Image Styles */
-.preview-image {
-  max-width: 50%; /* Set max-width to 50% */
-  max-height: 50%; /* Set max-height to 50% */
-  width: auto; /* Ensure width scales proportionally */
-  height: auto; /* Ensure height scales proportionally */
-  display: block;
-  margin: 0 auto; /* Center the image */
-  border-radius: 15px; /* Match the container and drag-drop area border-radius */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* More prominent shadow */
-  transition: transform 0.3s ease-in-out;
-  object-fit: contain; /* Fit the image within its container */
-}
-
-.preview-image:hover {
-  transform: scale(1.1);
-}
-
-/* Button Styles */
+/* Buttons */
 .btn {
-  margin-top: 12px; /* Increased margin for better spacing */
-  padding: 12px 24px; /* Slightly larger padding for better usability */
-  border: none;
-  border-radius: 25px;
-  background-color: #28a745;
-  color: white;
+  font-size: 14px;
+  border-radius: 5px;
+  padding: 10px 15px;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-
-.btn:hover {
-  background-color: #218838;
-  transform: scale(1.05);
 }
 
 .btn-success {
-  background-color: #667BC6;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #218838;
 }
 
 .btn-secondary {
-  background-color: #DA7297;
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
 }
 
 .btn-danger {
-  background-color: #DA7297;
-  margin-left: 10px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
 }
 
-/* Adding space between buttons */
-.btn + .btn {
-  margin-left: 12px; /* Increased margin for better spacing */
+.btn-danger:hover {
+  background-color: #c82333;
 }
 
-.rotare {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.rotare .btn-info {
-  background-color: #667BC6;
-}
-
-.rotare .btn-warning {
-  background-color: #DA7297;
-}
-
-.colore .btn-secondary {
-  background-color: #fee58c;
-}
-
-.colore .btn-warning {
-  background-color: #DA7297;
-}
-
-.shate {
-  margin-top: 10px;
-}
-
-/* Modal Styles */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0, 0, 0, 0.5); /* Slightly darker background for better contrast */
-}
-
-/* Modal Content Styles */
-.modal-content {
-  background-color: #fefefe;
-  margin: 10% auto; /* Adjusted margin for better centering */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 70%; /* Adjusted width for better responsiveness */
-  border-radius: 15px; /* Match the container border-radius */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* More prominent shadow */
-}
-
-/* Close Button Styles */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 32px; /* Larger close button for better accessibility */
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-/* Cropper Container Styles */
-.cropper-container {
-  width: 100%;
-  height: 400px;
-  position: relative;
-}
-
-.cropper-image {
-  max-width: 100%;
-  max-height: 400px;
-}
-
-.preview-image {
-  transition: filter 0.3s ease, transform 0.3s ease;
-}
-
-.col-4 {
-  right: 970px;
-  transform: translateX(-50%);
-  width: 100%; /* Adjust width as necessary */
-  max-width: 300px; /* Adjust max-width as needed */
-  top: 700px;
-  position: relative;
-}
-
+/* Card Styles */
 .card {
-  width: 1300px;
-  margin-top: 300px;
+  background: black;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-container {
+  column-count: 5; /* Adjust the number of columns */
+  column-gap: 15px; /* Gap between columns */
+}
+
+.card-container .image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
+  /* Use the CSS Grid auto-placement feature */
+  grid-row-end: span var(--grid-row-span, 1);
+  /* Ensure items take up the space they need */
+  align-self: start;
 }
 
 .image-container {
-  display: inline-block;
-  margin-left: 30px;
-  margin-top: 30px;
-  border-radius: 20px;
-  width: 220px; /* Fixed width */
-  height: 300px; /* Fixed height */
-  overflow: hidden; /* Hide overflow */
-  position: relative; /* Ensure the trash icon is positioned correctly */
-  transition: transform 0.3s ease-in-out; /* Add transition for scaling effect */
+  break-inside: avoid; /* Prevents breaking items between columns */
+  margin-bottom: 15px;
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
-.image-item {
-  cursor: pointer;
+.image-container img {
+  width: 100%;
+  height: auto;
   display: block;
-  width: 100%; /* Ensure the image fits the container's width */
-  height: 100%; /* Ensure the image fits the container's height */
-  object-fit: cover; /* Scale the image to cover the container */
-  transition: transform 0.3s ease-in-out; /* Add transition for scaling effect */
+  transition: transform 0.3s ease; /* Smooth transition for image transform */
 }
 
+
+.image-grid img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+
+.image-container:hover img {
+  transform: scale(1.1); /* Slightly scale up the image on hover */
+}
+
+/* Trash icon button */
 .trash-icon {
   position: absolute;
-  top: 10px; /* Adjust the position as needed */
-  right: 10px; /* Adjust the position as needed */
-  display: none;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; /* Add transition for opacity and scaling effect */
-  z-index: 1;
+  top: 10px;
+  right: 10px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0; /* Hide by default */
+  transition: opacity 0.3s ease; /* Smooth transition for opacity */
 }
 
+/* Show the trash icon on hover over the image container */
 .image-container:hover .trash-icon {
-  display: block;
-  opacity: 1;
-  transform: scale(1.2); /* Scale up the icon on hover */
+  opacity: 1; /* Show the trash icon on hover */
 }
-
-.image-container:hover .image-item {
-  transform: scale(1.05); /* Slightly scale up the image on hover */
-}
-
-.no-image {
+/* Modal Styles */
+.modal {
   display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
 
-.filerow {
-  margin-top: 10px;
+.modal-content {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow-y: auto;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+.close:hover {
+  color: #dc3545;
 }
 
 .preview-image {
-  transition: filter 0.3s ease, transform 0.3s ease;
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+.modal-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Preview Modal Specific Styles */
+.preview-modal .edit-button,
+.preview-modal .share-button {
+  padding: 10px;
+  font-size: 14px;
+}
+
+.edit-button {
+  background: #007bff;
+  color: #fff;
+  border: none;
+}
+
+.edit-button:hover {
+  background: #0056b3;
+}
+
+.share-button {
+  background: #28a745;
+  color: #fff;
+  border: none;
+}
+
+.share-button:hover {
+  background: #218838;
+}
+
+/* Edit Modal Styles */
+.edit-modal .modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.rotate-button,
+.rotate-reset,
+.filter-grey,
+.filter-sepia,
+.filter-invert,
+.filter-reset,
+.apply-changes {
+  padding: 10px;
+  font-size: 14px;
+}
+
+.rotate-button,
+.filter-reset {
+  background: #007bff;
+  color: #fff;
+  border: none;
+}
+
+.rotate-button:hover,
+.filter-reset:hover {
+  background: #0056b3;
+}
+
+.filter-grey,
+.filter-sepia,
+.filter-invert {
+  background: #6c757d;
+  color: #fff;
+  border: none;
+}
+
+.filter-grey:hover,
+.filter-sepia:hover,
+.filter-invert:hover {
+  background: #5a6268;
+}
+
+.apply-changes {
+  background: #28a745;
+  color: #fff;
+  border: none;
+}
+
+.apply-changes:hover {
+  background: #218838;
+}
+
+/* Comments Section */
+.comments-section {
+  margin-top: 20px;
+}
+
+.comments-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.comments-section li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.comments-section input {
+  width: calc(100% - 100px);
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.comments-section button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.comments-section button:hover {
+  background-color: #0056b3;
+}
+
+/* Upload Modal Styles */
+.upload-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.upload-modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 600px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.upload-modal .drag-drop-area {
+  border: 2px dashed #ccc;
+  padding: 20px;
+  text-align: center;
+}
+
+.upload-modal .custom-file-upload {
   cursor: pointer;
 }
 
-.croppped {
-  border: 1px solid #999;
-  border-radius: 10px;
+.upload-modal .preview-box {
+  max-width: 100px;
+  margin: 10px;
+}
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
   padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+/* Dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 5px;
+  top: 100%;
+  right: 0;
+}
+
+/* Links inside the dropdown */
+.dropdown-content button {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  border: none;
+  background: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content button:hover {
+  background-color: #f1f1f1;
+}
+
+/* Show the dropdown menu when the dropdown button is clicked */
+.dropdown .dropbtn:focus + .dropdown-content,
+.dropdown .dropbtn:active + .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown .dropbtn:focus {
+  background-color: #3e8e41;
+}
+
+@keyframes gradientShift {
+  0% {
+      background-position: 0% 0%;
+  }
+  50% {
+      background-position: 100% 100%;
+  }
+  100% {
+      background-position: 0% 0%;
+  }
 }

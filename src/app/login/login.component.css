@@ -20,16 +20,29 @@ body {
   align-items: center;
   justify-content: center;
   padding: 50px;
-  border-radius: 20px;
-  background: #fafafa; 
+  color: white;
+  background: black; 
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   animation: fadeIn 1.5s ease-in-out;
   backdrop-filter: blur(10px);
+  border: 20px solid transparent; /* Set a transparent border to overlay the gradient */
+  border-radius: 20px; /* Match the container's border-radius */
+  border-image: linear-gradient(45deg, #180161, #4F1787, #EB3678, #FB773C);
+  border-image-slice: 20; /* Ensures the gradient covers the full border width */
 }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
+}
+
+.title {
+  font-size: 40px; /* Adjust size as needed */
+  font-weight: bold; /* Optional: make the text bold */
+  background: linear-gradient(45deg, #180161, #4F1787, #EB3678, #FB773C);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* Standard for browsers that support it */
 }
 
 h1 {
@@ -69,7 +82,7 @@ h1 {
 }
 
 .submit {
-  background: #FFA07A; /* Light orange button background */
+  background: #FB773C; /* Light orange button background */
   color: white;
   border: none;
   padding: 10px 20px;
@@ -80,18 +93,49 @@ h1 {
 }
 
 .submit:hover {
-  background: #FF8C00; /* Darker shade of light orange */
+  background: #e85f20; /* Darker shade of light orange */
 }
 
 .submit-reg {
   border: none;
   background: none;
-  color: #FFA07A;
+  color: #EB3678 ;
   margin-top: 20px;
   cursor: pointer;
   transition: color 0.3s ease;
 }
 
 .submit-reg:hover {
-  color: #FF4500; /* Light orange color for registration button */
+  color: #4F1787; /* Light orange color for registration button */
+}
+
+
+/* Slideshow container */
+.slideshow-background {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Adjust based on your needs */
+  background-size: cover;
+  background-position: center;
+  animation: slide 25s infinite; /* Adjust timing to suit your needs */
+}
+
+/* Slideshow images */
+@keyframes slide {
+  0% { background-image: url('../assets/anime.jpg'); }
+  20% { background-image: url('../assets/new\ jeans.jpg'); }
+  40% { background-image: url('../assets/seventeen.jpg'); }
+  60% { background-image: url('../assets/steven.jpg'); }
+  80% { background-image: url('../assets/tekken.jpg'); }
+  100% { background-image: url('../assets/anime.jpg'); } /* Loop back to the first image */
+}
+
+/* Content inside the slideshow */
+.content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+
 }

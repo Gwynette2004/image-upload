@@ -1,85 +1,115 @@
 <head>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <!-- Include any additional CSS files here -->
 </head>
 <body>
-  <h1 class="h1">IMAGE UPLOAD</h1>
-  <div class="container">
-    <div class="row">
-      <div class="col-8">
-        <h3 class="insert">INSERT FILE HERE</h3>
+  
+  <div class="header-row">
+  <button class="create" (click)="toggleUploadSection()"><i class="fa-solid fa-plus"></i></button>
+  <h1 class="h1">FANDORAMA</h1>
+  <button class="logout" (click)="logout()"><i class="fa-solid fa-right-from-bracket"></i></button>
+  </div>
 
-        <!-- Drag and Drop Area -->
-        <div
-          class="drag-drop-area"
-          (dragover)="onDragOver($event)"
-          (dragleave)="onDragLeave($event)"
-          (drop)="onDrop($event)"
-          [class.drag-over]="isDragOver"
-        >
-          <p>Drag and drop an image here, or</p>
-
-          <!-- Show the "Choose File" button and input field only if no image is being previewed -->
-          <label *ngIf="!preview" for="file-input" class="custom-file-upload">Choose File</label>
-          <input *ngIf="!preview" type="file" id="file-input" accept="image/*" (change)="selectFile($event)" class="file-input"/>
-
-          <!-- Preview box inside drag-and-drop area, shown only when there is a preview image -->
-          <img *ngIf="preview" [src]="preview" class="preview-box" alt="Preview"/>
+  <!-- Upload Modal -->
+  <div *ngIf="showUploadSection" class="upload-modal">
+    <div class="upload-modal-content">
+      <button class="close-btn" (click)="toggleUploadSection()">&times;</button>
+      <h3 class="insert">INSERT FILE HERE</h3>
+  
+      <div class="drag-drop-area"
+        (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave($event)"
+        (drop)="onDrop($event)"
+        [class.drag-over]="isDragOver"
+        aria-label="Drag and drop images here, or choose files to upload">
+        <label for="file-input" class="custom-file-upload" *ngIf="files.length === 0">Choose File(s)</label>
+        <input type="file" id="file-input" accept="image/*" (change)="selectFiles($event)" class="file-input" multiple />
+        <div *ngIf="files.length" class="preview-boxes">
+          <img *ngFor="let file of files" [src]="file.preview" class="preview-box" alt="Preview" />
         </div>
-
-        <!-- Buttons remain outside of the drag-and-drop area -->
-        <button class="btn btn-success btn-sm" (click)="upload(); onreload()">Upload</button>
-        <button class="btn btn-secondary btn-sm" (click)="cancelEdit()">Cancel</button>
       </div>
+  
+      <button class="btn btn-success btn-sm" (click)="upload(); onreload()">Upload</button>
+      <button class="btn btn-secondary btn-sm" (click)="cancelEdit()">Cancel</button>
+    </div>
+  </div>
 
-      <div class="col-4">
-        <div class="card">
-          <div class="card-header">List of Images</div>
-          <div class="card-container"> <!-- Flexbox container for images -->
-            <div class="image-container" *ngFor="let image of imageInfos | async">
-              <img [src]="getImageUrl(image.img)" alt="{{ image.imgName }}" height="80px" (click)="openPreview(getImageUrl(image.img), image.imgName, image.id)" class="image-item"/>
-              <button (click)="deleteImage(image.id); onreload()" class="btn btn-danger btn-sm trash-icon"><i class="fa-solid fa-trash"></i></button>
-            </div>
-          </div>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-container">
+        <div class="image-container" *ngFor="let image of imageInfos | async" [ngStyle]="{'grid-row-end': 'span ' + getRandomRowSpan()}">
+          <img [src]="getImageUrl(image.img)" alt="{{ image.imgName }}" height="80px" (click)="openPreview(getImageUrl(image.img), image.imgName, image.id)" class="image-item"/>
+          <button (click)="deleteImage(image.id); onreload()" class="btn btn-danger btn-sm trash-icon">
+            <i class="fa-solid fa-trash"></i>
+          </button>
         </div>
       </div>
     </div>
   </div>
+  
+ 
 
-  <!-- Preview Modal -->
-  <div id="previewModal" class="modal">
+<!-- Preview Modal -->
+<div id="previewModal" class="modal preview-modal">
+  <div class="modal-content">
+    <span class="close" (click)="closePreview()">&times;</span>
+    <img #uploadedImage [src]="selectedImage" class="preview-image" [ngStyle]="{'filter': currentFilter}" alt="Selected Image"/>
+    <p class="insertN">{{ selectedImageName }}</p>
+
+
+    <div class="dropdown">
+      <button class="dropbtn">Options</button>
+      <div class="dropdown-content">
+        <button class="edit-button" (click)="openEditModal()" [disabled]="!selectedImage">
+          <i class="fa-solid fa-edit"></i> Edit
+        </button>
+        <button class="share-button" (click)="shareImage()" [disabled]="!selectedImage">
+          <i class="fa-solid fa-share"></i> Share
+        </button>
+        <button (click)="downloadImage()" *ngIf="selectedImage">Download</button>
+      </div>
+    </div>
+
+
+
+    <div class="comments-section">
+      <h3 class="insert">Comments</h3>
+      <ul>
+        <li *ngFor="let comment of comments">
+          <strong>{{ comment.username }}:</strong> {{ comment.comment }}
+        </li>
+      </ul>
+      <input type="text" [(ngModel)]="newComment" placeholder="Add a comment" />
+      <button (click)="addComment()">Add Comment</button>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Edit Modal -->
+  <div id="editModal" class="modal edit-modal">
     <div class="modal-content">
-        <span class="close" (click)="closePreview()">&times;</span>
-        <img #uploadedImage [src]="selectedImage" class="preview-image" [ngStyle]="{'filter': currentFilter}" alt="Selected Image"/>
-        <p class="insertN">{{ selectedImageName }}</p> <!-- Display the image name here -->
-        <div class="modal-actions">
-            <div class="rotate">
-                <h3 class="insert">Try Rotate</h3>
-                <button class="rotateB" (click)="rotatePreviewImage()" [disabled]="!selectedImage">Rotate</button>
-                <button class="rotateR" (click)="resetPreviewImage()" [disabled]="!selectedImage"><i class="fa-solid fa-rotate-left"></i></button>
-            </div>
-            <div class="color">
-                <h3 class="insert">Try Colour Filter</h3>
-                <button class="grey" (click)="applyFilter('grayscale(100%)')" [disabled]="!selectedImage">Grayscale</button>
-                <button class="sepia" (click)="applyFilter('sepia(100%)')" [disabled]="!selectedImage">Sepia</button>
-                <button class="inv" (click)="applyFilter('invert(100%)')" [disabled]="!selectedImage">Invert</button>
-                <button class="colorR" (click)="applyFilter('none')" [disabled]="!selectedImage"><i class="fa-solid fa-rotate-left"></i></button>
-                <button class="btn btn-primary" (click)="applyChanges()" [disabled]="!selectedImage">Apply Changes</button>
-            </div>q
-            <div class="share">
-                <button class="shareB" (click)="shareImage()" [disabled]="!selectedImage"><i class="fa-solid fa-share"></i></button>
-            </div>
+      <span class="close" (click)="closeEditModal()">&times;</span>
+      <img #editImage [src]="selectedImage" class="preview-image" [ngStyle]="{'filter': currentFilter}" alt="Selected Image"/>
+      <div class="edit-actions">
+        <div class="rotate">
+          <h3 class="insert">Try Rotate</h3>
+          <button class="rotate-button" (click)="rotatePreviewImage()" [disabled]="!selectedImage">Rotate</button>
+          <button class="rotate-reset" (click)="resetPreviewImage()" [disabled]="!selectedImage">
+            <i class="fa-solid fa-rotate-left"></i>
+          </button>
         </div>
-
-      <!-- Comments Section -->
-      <div class="comments-section">
-        <h3 class="insert">Comments</h3>
-        <ul>
-          <li *ngFor="let comment of comments">
-            <strong>{{ comment.username }}:</strong> {{ comment.comment }}
-          </li>
-        </ul>
-        <input type="text" [(ngModel)]="newComment" placeholder="Add a comment" />
-        <button (click)="addComment()">Add Comment</button>
+        <div class="color">
+          <h3 class="insert">Try Colour Filter</h3>
+          <button class="filter-grey" (click)="applyFilter('grayscale(100%)')" [disabled]="!selectedImage">Grayscale</button>
+          <button class="filter-sepia" (click)="applyFilter('sepia(100%)')" [disabled]="!selectedImage">Sepia</button>
+          <button class="filter-invert" (click)="applyFilter('invert(100%)')" [disabled]="!selectedImage">Invert</button>
+          <button class="filter-reset" (click)="applyFilter('none')" [disabled]="!selectedImage">
+            <i class="fa-solid fa-rotate-left"></i>
+          </button>
+          <button class="apply-changes" (click)="applyChanges()" [disabled]="!selectedImage">Apply Changes</button>
+        </div>
       </div>
     </div>
   </div>

@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ImageUploadComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('uploadedImage') uploadedImage!: ElementRef<HTMLImageElement>;
+  @ViewChild('editImage') editImage!: ElementRef<HTMLImageElement>;
 
   currentFile: File | null = null;
   message = '';
@@ -34,6 +35,9 @@ export class ImageUploadComponent implements OnInit, AfterViewInit, OnDestroy {
   currentFilter: string = 'none'; // Initialize filter to 'none'
   selectedImageId: number | null = null;
   currentUserId: number | null = null;
+  showUploadSection = false; // Property to toggle upload section visibility
+  showEditSection = false;
+  
 
   private baseUrl: string = '';
 
@@ -55,69 +59,82 @@ export class ImageUploadComponent implements OnInit, AfterViewInit, OnDestroy {
       console.error('User ID not found or invalid.');
       this.currentUserId = null;
     }
-    
   }
 
   ngAfterViewInit(): void {}
 
   ngOnDestroy(): void {}
 
-  selectFile(event: Event): void {
+  files: { file: File, preview: string }[] = [];
+  
+  selectFiles(event: Event): void {
     this.message = '';
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      const file = input.files.item(0);
-      if (file) {
-        this.currentFile = file;
+      const selectedFiles = Array.from(input.files);
+      this.files = selectedFiles.map(file => {
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          this.preview = e.target.result; // Set preview image
-          this.editing = false;
-          this.rotation = 0; // Reset rotation when a new file is selected
+          this.files = this.files.map(f => f.file === file ? { file, preview: e.target.result } : f);
+          // Ensure the preview is updated for the selected file
+          if (this.files.length > 0) {
+            this.preview = this.files[0].preview; // Set preview for the first file as an example
+          }
         };
-        reader.readAsDataURL(this.currentFile);
-      }
+        reader.readAsDataURL(file);
+        return { file, preview: '' }; // Initialize with empty preview
+      });
     }
   }
-
-  rotateImage(): void {
-    this.rotation += 90;
-    if (this.uploadedImage) {
-      this.uploadedImage.nativeElement.style.transform = `rotate(${this.rotation}deg)`;
-    }
-  }
-
-  resetImage(): void {
-    this.rotation = 0;
-    if (this.uploadedImage) {
-      this.uploadedImage.nativeElement.style.transform = `rotate(${this.rotation}deg)`;
-    }
-  }
+  
+  
 
   onDragOver(event: DragEvent): void {
     event.preventDefault();
     this.isDragOver = true;
+    console.log('Drag Over');
   }
-
+  
   onDragLeave(event: DragEvent): void {
     event.preventDefault();
     this.isDragOver = false;
+    console.log('Drag Leave');
   }
-
+  
   onDrop(event: DragEvent): void {
     event.preventDefault();
     this.isDragOver = false;
+  
     if (event.dataTransfer && event.dataTransfer.files.length > 0) {
-      this.currentFile = event.dataTransfer.files[0];
+      const files = event.dataTransfer.files;
+      this.currentFile = files[0];
+      
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.preview = e.target.result;
+        this.preview = e.target.result; // Set the preview
         this.editing = false;
         this.rotation = 0; // Reset rotation when a new file is dropped
       };
       reader.readAsDataURL(this.currentFile);
+      
+      // Optionally process all files, not just the first one
+      this.files = Array.from(files).map(file => ({
+        file,
+        preview: ''
+      }));
+      
+      this.files.forEach(fileObj => {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.files = this.files.map(f => f.file === fileObj.file ? { file: fileObj.file, preview: e.target.result } : f);
+        };
+        reader.readAsDataURL(fileObj.file);
+      });
     }
   }
+
+
+  
 
   cancelEdit(): void {
     // Reset editing state
@@ -127,42 +144,38 @@ export class ImageUploadComponent implements OnInit, AfterViewInit, OnDestroy {
     this.croppedImage = null;
     this.rotation = 0;
     this.currentFilter = 'none'; // Reset filter
-
+  
+    // Clear the files array
+    this.files = [];
+    
     // Close any open modals
     this.closeModal('previewModal');
     this.closeModal('cropperModal'); // Ensure this modal is also closed
   }
 
   upload(): void {
-    if (this.currentFile) {
-      let fileToUpload = this.currentFile;
-      if (this.croppedImage) {
-        try {
-          const dataURL = this.croppedImage.toString() || '';
-          console.log('Cropped image data URL for upload:', dataURL);
-        } catch (error) {
-          console.error('Error converting cropped image to blob:', error);
-          this.message = 'Failed to process cropped image.';
-          return;
-        }
-      }
-      this.uploadService.upload(fileToUpload).subscribe({
+    if (this.files.length > 0) {
+      const formData = new FormData();
+      this.files.forEach(fileObj => formData.append('image[]', fileObj.file));
+  
+      this.uploadService.upload(formData).subscribe({
         next: (event: any) => {
           if (event instanceof HttpResponse) {
             this.message = event.body.message;
             this.refreshImageList();
           }
         },
+        error: (err) => {
+          this.message = 'Upload failed: ' + err.message;
+        },
         complete: () => {
           this.resetUploadState();
-          window.location.reload();
         }
       });
     } else {
       this.message = 'No image has been selected.';
     }
   }
-
 
   getImageUrl(imageName: string): string {
     return `${this.baseUrl}${imageName}`;
@@ -209,6 +222,7 @@ export class ImageUploadComponent implements OnInit, AfterViewInit, OnDestroy {
     this.rotation = 0;                  // Reset rotation when opening preview
     this.currentFilter = 'none';        // Reset filter when opening preview
 
+
     this.showModal('previewModal');     // Show the modal
 
     // Ensure this code runs after the modal is fully visible
@@ -231,13 +245,16 @@ export class ImageUploadComponent implements OnInit, AfterViewInit, OnDestroy {
     this.closeModal('previewModal');
   }
 
-  rotatePreviewImage(): void {
-    this.rotation += 90;
-    const previewImage = document.querySelector('.preview-image') as HTMLImageElement;
-    if (previewImage) {
-      previewImage.style.transform = `rotate(${this.rotation}deg)`;
-    }
+rotatePreviewImage(): void {
+  this.rotation += 90;
+  console.log('Rotating image by:', this.rotation, 'degrees');
+  if (this.editImage) {
+    console.log('Image element found:', this.editImage.nativeElement);
+    this.editImage.nativeElement.style.transform = `rotate(${this.rotation}deg)`;
+  } else {
+    console.error('Edit image element not found.');
   }
+}
 
   resetPreviewImage(): void {
     this.rotation = 0;
@@ -397,4 +414,58 @@ applyChanges(): void {
       console.error('No image selected or user not logged in.');
     }
   }  
+
+  toggleUploadSection(): void {
+    this.showUploadSection = !this.showUploadSection;
+  }
+
+  openEditModal() {
+    document.getElementById('editModal')!.style.display = 'block';
+  }
+  
+  closeEditModal() {
+    document.getElementById('editModal')!.style.display = 'none';
+  }
+  
+  downloadImage(): void {
+    if (this.selectedImage) {
+      console.log('Downloading image:', this.selectedImage);
+  
+      fetch(this.selectedImage, { mode: 'no-cors' })
+        .then(response => response.blob())
+        .then(blob => {
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = this.selectedImageName || 'downloaded_image';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(url); // Clean up the URL object
+        })
+        .catch(error => {
+          console.error('Error downloading the image:', error);
+          this.message = 'An error occurred while downloading the image.';
+        });
+    } else {
+      this.message = 'No image selected for download.';
+    }
+  }
+
+  toggleDropdown() {
+    const dropdown = document.getElementById('actionDropdown');
+    if (dropdown) {
+      dropdown.classList.toggle('active');
+    }
+  }
+
+  logout() {
+    localStorage.removeItem('authToken'); 
+    this.router.navigate(['/login']);
+  }
+
+  getRandomRowSpan(): number {
+    return Math.floor(Math.random() * 3) + 1; // Randomly 1, 2, or 3 rows tall
+  }
 }
+

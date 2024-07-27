@@ -11,16 +11,13 @@ export class ImageUploadService {
 
   constructor(private http: HttpClient) {}
 
-  upload(file: File): Observable<any> {
-  const formData: FormData = new FormData();
-  formData.append('image', file);
-
-  return this.http.post(`${this.baseUrl}/addimage`, formData, {
-    reportProgress: true,
-    observe: 'events',
-    responseType: 'json'
-  })
-}
+  upload(formData: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/addimage`, formData, {
+      reportProgress: true,
+      observe: 'events',
+      responseType: 'json'
+    });
+  }
 
   getFiles(): Observable<any> {
     return this.http.get(`${this.baseUrl}/getimages`).pipe(
@@ -54,9 +51,9 @@ export class ImageUploadService {
       // })
 
 
-      updateImage(data: { imageId: number; filter: string; rotation: number }): Observable<any> {
-        console.log('Sending update image request:', data); // Log the request data
-        return this.http.post<any>(`${this.baseUrl}/updateimage`, data);
+  updateImage(data: { imageId: number; filter: string; rotation: number }): Observable<any> {
+    console.log('Sending update image request:', data); // Log the request data
+    return this.http.post<any>(`${this.baseUrl}/updateimage`, data);
       }
 
   userSignUp(data: any): Observable<any> {
