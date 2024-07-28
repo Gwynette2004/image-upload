@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ElementRef, ViewChild, ChangeDetectorRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
@@ -37,7 +37,9 @@ export class ImageUploadComponent implements OnInit, AfterViewInit, OnDestroy {
   currentUserId: number | null = null;
   showUploadSection = false; // Property to toggle upload section visibility
   showEditSection = false;
-  
+  isDropdownOpen = false;
+
+
 
   private baseUrl: string = '';
 
@@ -49,7 +51,8 @@ export class ImageUploadComponent implements OnInit, AfterViewInit, OnDestroy {
     private uploadService: ImageUploadService,
     private commentService: CommentService,
     private sanitizer: DomSanitizer,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -61,11 +64,17 @@ export class ImageUploadComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      // Any updates to variables affecting the view
+      this.cdr.detectChanges(); // Manually trigger change detection
+    }, 0);
+  }
 
   ngOnDestroy(): void {}
 
   files: { file: File, preview: string }[] = [];
+  
   
   selectFiles(event: Event): void {
     this.message = '';
@@ -225,18 +234,18 @@ export class ImageUploadComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.showModal('previewModal');     // Show the modal
 
-    // Ensure this code runs after the modal is fully visible
     setTimeout(() => {
-        if (this.uploadedImage && this.uploadedImage.nativeElement) {
-            console.log('Preview image element:', this.uploadedImage.nativeElement);
-        } else {
-            console.error('Uploaded image element not found in preview modal.');
-        }
-    }, 500); // Adjust the timeout as needed
-
-    this.loadComments();                // Load comments for the selected image
-}
-
+      const uploadedImageElement = this.uploadedImage?.nativeElement;
+      if (uploadedImageElement) {
+        console.log('Preview image element:', uploadedImageElement);
+        this.cdr.detectChanges();
+      } else {
+        console.error('Uploaded image element not found in preview modal.');
+      }
+    }, 500);
+  
+    this.loadComments();
+  }
 
   
   closePreview(): void {
@@ -257,6 +266,7 @@ rotatePreviewImage(): void {
 }
 
   resetPreviewImage(): void {
+    console.log('Resetting preview image');
     this.rotation = 0;
     const previewImage = document.querySelector('.preview-image') as HTMLImageElement;
     if (previewImage) {
@@ -264,7 +274,9 @@ rotatePreviewImage(): void {
     }
   }
 
-  shareImage(): void {
+  shareImage(event:Event): void {
+    event.stopPropagation()
+    console.log('Edit button clicked');
     if (this.selectedImage) {
       if (navigator.share) {
         navigator.share({
@@ -377,6 +389,7 @@ applyChanges(): void {
         next: (response) => {
           if (response.status.remarks === 'success') {
             this.comments = response.payload || [];
+            this.cdr.detectChanges(); // Manually trigger change detection
           } else {
             console.error('Failed to load comments:', response.status.message);
           }
@@ -419,15 +432,19 @@ applyChanges(): void {
     this.showUploadSection = !this.showUploadSection;
   }
 
-  openEditModal() {
+  openEditModal(event:Event) {
+    console.log('Edit button clicked');
     document.getElementById('editModal')!.style.display = 'block';
+    event.stopPropagation();
   }
   
   closeEditModal() {
     document.getElementById('editModal')!.style.display = 'none';
   }
   
-  downloadImage(): void {
+  downloadImage(event:Event): void {
+    event.stopPropagation()
+    console.log('Edit button clicked');
     if (this.selectedImage) {
       console.log('Downloading image:', this.selectedImage);
   
@@ -452,20 +469,21 @@ applyChanges(): void {
     }
   }
 
-  toggleDropdown() {
-    const dropdown = document.getElementById('actionDropdown');
-    if (dropdown) {
-      dropdown.classList.toggle('active');
-    }
-  }
 
   logout() {
     localStorage.removeItem('authToken'); 
     this.router.navigate(['/login']);
   }
 
-  getRandomRowSpan(): number {
-    return Math.floor(Math.random() * 3) + 1; // Randomly 1, 2, or 3 rows tall
-  }
-}
+  dropdownOpen = false;
 
+  toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
+
+  closeDropdown() {
+    this.dropdownOpen = false;
+  }
+
+
+}

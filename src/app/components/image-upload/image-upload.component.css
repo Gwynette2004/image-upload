@@ -7,14 +7,14 @@ body {
 }
 
 button {
-  background: none; /* Remove background color */
-  border: none;     /* Remove border */
-  color: inherit;   /* Inherit text color from parent */
-  font: inherit;    /* Inherit font styles from parent */
-  cursor: pointer;  /* Change cursor to pointer */
-  padding: 0;       /* Remove padding */
-  margin: 0;        /* Remove margin */
-  text-align: left; /* Align text to the left */
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  text-align: left;
 }
 
 h1.h1 {
@@ -29,7 +29,7 @@ h1.h1 {
   margin-top: 20px;
   padding: 20px;
   background-color: black;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6); /* Darker shadow around the container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
   color: black;
   border-radius: 20px;
 }
@@ -40,61 +40,44 @@ h1.h1 {
   gap: 20px;
 }
 
-.create {
-  text-decoration: none;
-  background-color: transparent; /* Transparent background */
-  color: #007bff; /* Custom text color */
-  font-size: 14px; /* Font size */
-  padding: 10px;   /* Custom padding */
-  border-radius: 5px; /* Rounded corners */
-}
-
-.logout {
-  text-decoration: none;
-  background-color: transparent; /* Transparent background */
-  color: #007bff; /* Custom text color */
-  font-size: 14px; /* Font size */
-  padding: 10px;   /* Custom padding */
-  border-radius: 5px; /* Rounded corners */
-}
-
-/* Container for the header row */
-.header-row {
-  display: flex;
-  align-items: center; /* Align items vertically center */
-  justify-content: space-between; /* Space out the items */
-  padding: 10px 20px; /* Adjust padding as needed */
-  background-color: black; /* Background color for the header */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Bottom shadow */
-}
-
-.header-row h1 {
-  font-size: 40px; /* Adjust size as needed */
-  font-weight: bold; /* Optional: make the text bold */
-  background: linear-gradient(45deg, #180161, #4F1787, #EB3678, #FB773C);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text; /* Standard for browsers that support it */
-}
-
-.header-row .create,
-.header-row .logout {
+.create, .logout {
   text-decoration: none;
   background-color: transparent;
   color: #007bff;
   font-size: 14px;
   padding: 10px;
   border-radius: 5px;
-  margin-left: 10px; /* Space between buttons */
 }
 
-/* Adjust button hover effects if needed */
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: black;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.header-row h1 {
+  font-size: 40px;
+  font-weight: bold;
+  background: linear-gradient(45deg, #180161, #4F1787, #EB3678, #FB773C);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-row .create,
+.header-row .logout {
+  margin-left: 10px;
+}
+
 .header-row .create:hover,
 .header-row .logout:hover {
-  color: #0056b3; /* Change color on hover */
+  color: #0056b3;
 }
 
-.fa-solid{
+.fa-solid {
   font-size: 30px;
   color: #EB3678;
 }
@@ -103,9 +86,11 @@ h1.h1 {
   font-size: 15px;
   color: white;
 }
+
 /* Drag and Drop Area */
 .drag-drop-area {
-  border: 2px dashed #ccc;
+  border:5px dashed 
+  #180161;
   padding: 20px;
   text-align: center;
   transition: border-color 0.3s;
@@ -116,11 +101,12 @@ h1.h1 {
 }
 
 .custom-file-upload {
+  font-size: 20px;
   cursor: pointer;
-  background: #007bff;
+  background: #4F1787;
   color: #fff;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 30px;
   display: inline-block;
 }
 
@@ -141,7 +127,9 @@ h1.h1 {
   object-fit: cover;
   border: 1px solid #ddd;
   border-radius: 5px;
+  text-align: left;
 }
+
 
 /* Buttons */
 .btn {
@@ -152,23 +140,33 @@ h1.h1 {
 }
 
 .btn-success {
-  background-color: #28a745;
-  color: #fff;
-  border: none;
+  color: white;
+  background-color: #FB773C;
+  padding: 10px 20px;
+  font-size: 20px;
+  margin-top: 20px;
+  margin-right: 10px;
+  border-radius: 20px;
+  cursor: pointer;
 }
 
 .btn-success:hover {
-  background-color: #218838;
+  background-color: #e46124;
 }
 
 .btn-secondary {
-  background-color: #6c757d;
-  color: #fff;
-  border: none;
+  color: white;
+  background-color: #EB3678;
+  padding: 10px 20px;
+  font-size: 20px;
+  margin-top: 20px;
+  margin-right: 10px;
+  border-radius: 20px;
+  cursor: pointer;
 }
 
 .btn-secondary:hover {
-  background-color: #5a6268;
+  background-color: #dd1c63;
 }
 
 .btn-danger {
@@ -181,6 +179,7 @@ h1.h1 {
   background-color: #c82333;
 }
 
+
 /* Card Styles */
 .card {
   background: black;
@@ -189,22 +188,20 @@ h1.h1 {
 }
 
 .card-container {
-  column-count: 5; /* Adjust the number of columns */
-  column-gap: 15px; /* Gap between columns */
+  column-count: 5;
+  column-gap: 15px;
 }
 
 .card-container .image-container {
   position: relative;
   overflow: hidden;
   border-radius: 5px;
-  /* Use the CSS Grid auto-placement feature */
   grid-row-end: span var(--grid-row-span, 1);
-  /* Ensure items take up the space they need */
   align-self: start;
 }
 
 .image-container {
-  break-inside: avoid; /* Prevents breaking items between columns */
+  break-inside: avoid;
   margin-bottom: 15px;
   position: relative;
   border-radius: 4px;
@@ -215,9 +212,8 @@ h1.h1 {
   width: 100%;
   height: auto;
   display: block;
-  transition: transform 0.3s ease; /* Smooth transition for image transform */
+  transition: transform 0.3s ease;
 }
-
 
 .image-grid img {
   width: 100%;
@@ -225,9 +221,8 @@ h1.h1 {
   object-fit: cover;
 }
 
-
 .image-container:hover img {
-  transform: scale(1.1); /* Slightly scale up the image on hover */
+  transform: scale(1.1);
 }
 
 /* Trash icon button */
@@ -242,36 +237,45 @@ h1.h1 {
   padding: 10px;
   cursor: pointer;
   z-index: 10;
-  opacity: 0; /* Hide by default */
-  transition: opacity 0.3s ease; /* Smooth transition for opacity */
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-/* Show the trash icon on hover over the image container */
 .image-container:hover .trash-icon {
-  opacity: 1; /* Show the trash icon on hover */
+  opacity: 1;
 }
+
 /* Modal Styles */
 .modal {
+  align-self: center;
+  margin: auto;
   display: none;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  background-color: black;
   background: rgba(0, 0, 0, 0.5);
+  overflow-y: auto; /* Allow scrolling in modal */
   align-items: center;
   justify-content: center;
   z-index: 1000;
 }
 
 .modal-content {
-  background: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  max-width: 90%;
-  max-height: 90%;
-  overflow-y: auto;
   position: relative;
+  background-color: black;
+  margin: 20px auto; /* Adjusted margin */
+  padding: 10px; /* Reduced padding */
+  border-radius: 15px;
+  border: 1px solid black;
+  width: 90%; /* Full width with some margin */
+  max-width: 800px; /* Maximum width for larger screens */
+  text-align: center;
+  box-sizing: border-box;
+  text-align: left;
+
 }
 
 .close {
@@ -290,49 +294,44 @@ h1.h1 {
 .preview-image {
   max-width: 100%;
   border-radius: 10px;
-}
-
-.modal-actions {
+  display: block;
+  margin: 0 auto; /* Center the image horizontally */
+  background-color: black;
   margin-top: 20px;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
 }
 
-/* Preview Modal Specific Styles */
-.preview-modal .edit-button,
-.preview-modal .share-button {
-  padding: 10px;
-  font-size: 14px;
+
+.comment {
+  font-weight: 600;
+  color: #EB3678;
+  font-size: 30px;
+  text-align: left;
+  margin-left: 17px;
+  margin-top: 20px;
+  margin-bottom: -10px;
 }
 
-.edit-button {
-  background: #007bff;
-  color: #fff;
-  border: none;
+.insertN
+  {
+    text-align: left;
+    margin-left: 15px;
+    margin-top: 15px;
+    font-weight: 600;
+    font-size: 35px;
+    background: linear-gradient(45deg, #180161, #4F1787, #EB3678, #FB773C);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+  }
+.dropdown {
+  margin-top: 10px; /* Add margin to separate dropdown from image */
 }
 
-.edit-button:hover {
-  background: #0056b3;
-}
 
-.share-button {
-  background: #28a745;
-  color: #fff;
-  border: none;
-}
 
-.share-button:hover {
-  background: #218838;
-}
-
-/* Edit Modal Styles */
-.edit-modal .modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+.comments-section {
+  margin-top: 10px; /* Add margin to separate comments from other elements */
 }
 
 .rotate-button,
@@ -340,8 +339,7 @@ h1.h1 {
 .filter-grey,
 .filter-sepia,
 .filter-invert,
-.filter-reset,
-.apply-changes {
+.filter-reset {
   padding: 10px;
   font-size: 14px;
 }
@@ -373,49 +371,17 @@ h1.h1 {
 }
 
 .apply-changes {
-  background: #28a745;
+  border-radius: 30px;
+  padding: 10px 20px;
+  background: #218838;
+  margin-left: 20px;
+  
   color: #fff;
   border: none;
 }
 
 .apply-changes:hover {
   background: #218838;
-}
-
-/* Comments Section */
-.comments-section {
-  margin-top: 20px;
-}
-
-.comments-section ul {
-  list-style: none;
-  padding: 0;
-}
-
-.comments-section li {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-.comments-section input {
-  width: calc(100% - 100px);
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-.comments-section button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.comments-section button:hover {
-  background-color: #0056b3;
 }
 
 /* Upload Modal Styles */
@@ -433,98 +399,423 @@ h1.h1 {
 }
 
 .upload-modal-content {
-  background: #fff;
+  background: black;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 20px;
   width: 80%;
   max-width: 600px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  max-height: 90%;
+  overflow-y: auto;
 }
 
-.upload-modal .drag-drop-area {
-  border: 2px dashed #ccc;
-  padding: 20px;
-  text-align: center;
+.insertF{
+  text-align: left;
+  margin-left: 15px;
+  margin-top: 15px;
+  font-weight: 600;
+  font-size: 35px;
+  background: linear-gradient(45deg, #180161, #4F1787, #EB3678, #FB773C);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
 }
 
-.upload-modal .custom-file-upload {
-  cursor: pointer;
-}
-
-.upload-modal .preview-box {
-  max-width: 100px;
-  margin: 10px;
-}
-
-/* Dropdown Button */
-.dropbtn {
-  background-color: #4CAF50;
-  color: white;
+/* Add this to your existing CSS */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 10px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  margin: 5px;
-}
-
-/* Dropdown container */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-/* Dropdown content (hidden by default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  border-radius: 5px;
-  top: 100%;
-  right: 0;
-}
-
-/* Links inside the dropdown */
-.dropdown-content button {
+  background-color: black;
   color: black;
+}
+
+.modal-header .dropdown {
+  margin: 0;
+  background-color: black;
+}
+
+.modal-header .close {
+  margin: 0;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+.modal-header .close:hover {
+  color: #dc3545;
+}
+
+.dropdown .dropbtn {
+  background: none;  /* Remove background */
+  border: none;  /* Remove border */
+  color: inherit;  /* Inherit text color */
+  font-size: inherit;  /* Inherit font size */
+  cursor: pointer;
+  padding: 0;
+}
+
+.dropdown .dropbtn:hover {
+  color: #EB3678;  /* Change text color on hover if needed */
+}
+
+
+
+.dropdown-content button {
+  background-color: transparent;
+  color: transparent;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
-  border: none;
   background: none;
-  cursor: pointer;
+  border: none;
   width: 100%;
   text-align: left;
-  border-bottom: 1px solid #ddd;
 }
 
-/* Change color of dropdown links on hover */
-.dropdown-content button:hover {
-  background-color: #f1f1f1;
+
+.upload-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #333;
 }
 
-/* Show the dropdown menu when the dropdown button is clicked */
-.dropdown .dropbtn:focus + .dropdown-content,
-.dropdown .dropbtn:active + .dropdown-content {
+.upload-close:hover {
+  color: #dc3545;
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.upload-form input[type="file"] {
+  margin-bottom: 10px;
+}
+
+.upload-form button[type="submit"] {
+  background: #007bff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.upload-form button[type="submit"]:hover {
+  background: #0056b3;
+}
+
+.upload-form .drag-drop-area {
+  padding: 20px;
+  text-align: center;
+  transition: border-color 0.3s;
+}
+
+.upload-form .drag-drop-area.drag-over {
+  border-color: #00f;
+}
+
+/* Dropdown Styles */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  margin-top: 10px;
+  background-color: #180161; /* Changed to a visible color for the dropdown */
+  color: black; /* Ensure text color is visible */
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition for dropdown */
+}
+
+.dropdown-content.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown-content button {
+  color: #EB3678;
+  padding: 12px 16px;
+  font-size: 18px;
+  font-weight: 200px;
+  text-decoration: none;
+  display: block;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  opacity: 0; /* Start hidden */
+  transform: translateY(-10px);
+  animation: slideIn 0.5s forwards;
+}
+
+.dropdown-content button:nth-child(1) {
+  animation-delay: 0.1s; /* Delay for the first item */
+}
+
+.dropdown-content button:nth-child(2) {
+  animation-delay: 0.3s; /* Delay for the second item */
+}
+
+.dropdown-content button:nth-child(3) {
+  animation-delay: 0.5s; /* Delay for the third item */
+}
+
+.show {
   display: block;
 }
 
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown .dropbtn:focus {
-  background-color: #3e8e41;
+.username {
+  text-align: left;
+  color: white;
+  font-size: 20px;
+  align-items: left;
+  align-self: left;
+  margin-top: 0px;
 }
 
+
+
+.comments-section button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  background-color: #4F1787;
+  margin-left: 15px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 6s ease, transform 0.8s ease; /* Add transition for background-color and transform */
+  background-size: 200% 200%; /* For smoother gradient transition */
+  background-position: 0% 50%; /* Initial background position */
+  background-image: linear-gradient(45deg, #4F1787, #4F1787); /* Initial background image */
+}
+
+.comments-section button:hover {
+  background-position: 100% 50%; /* Background position on hover */
+  background-image: linear-gradient(45deg, #180161, #4F1787, #EB3678, #FB773C); /* Gradient on hover */
+  transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+.comments-section input[type="text"] {
+  width: calc(92% - 120px); /* Adjust width to fit within the section */
+  padding: 10px;
+  margin-left: 15px;
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+  background-color: #444; /* Background color for the input field */
+  color: white; /* Text color for the input field */
+}
+
+.comments-section input[type="text"]::placeholder {
+  color: #bbb; /* Placeholder text color */
+}
+
+.comments-section ul {
+  margin-left: 10px;
+  margin-top: 20px;
+  list-style: none;
+  padding: 0;
+}
+
+.comments-section li {
+  color: white;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.commenti {
+  color: white;;
+}
+
+/* Edit Modal */
+.modal.edit-modal {
+  align-self: left;
+  margin: auto;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  background: rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+  align-items: left;
+  justify-content: left;
+  z-index: 1000;
+}
+
+.modal.edit-modal .modal-content {
+  position: relative;
+  background-color: black;
+  margin: 20px auto;
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid black;
+  width: 90%;
+  max-width: 800px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.modal.edit-modal .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+.modal.edit-modal .close:hover {
+  color: #dc3545;
+}
+
+.modal.edit-modal .preview-image {
+  max-width: 100%;
+  border-radius: 10px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.modal.edit-modal .insert {
+  text-align: left;
+  margin-left: 10px;
+  margin-top: 15px;
+  font-weight: 600;
+  font-size: 55px;
+  background: #EB3678;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.modal.edit-modal .edit-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+.modal.edit-modal .edit-actions .rotate,
+.modal.edit-modal .edit-actions .color {
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.modal.edit-modal .rotate h3,
+.modal.edit-modal .color h3 {
+  color: #EB3678;
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.modal.edit-modal .rotate-button,
+.modal.edit-modal .rotate-reset,
+.modal.edit-modal .filter-grey,
+.modal.edit-modal .filter-sepia,
+.modal.edit-modal .filter-invert,
+.modal.edit-modal .filter-reset,
+.modal.edit-modal {
+  padding: 10px;
+  font-size: 14px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* this is for rotate button */
+.modal.edit-modal .rotate-button,
+.modal.edit-modal .filter-reset { 
+  padding: 10px 20px;
+  background: #FB773C;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.modal.edit-modal .rotate-button:hover,
+.modal.edit-modal .filter-reset:hover {
+  background: #f06220;
+}
+
+.modal.edit-modal .filter-grey,
+.modal.edit-modal .filter-sepia,
+.modal.edit-modal .filter-invert {
+  padding: 10px 20px;
+  border-radius: 30px;
+  margin-left: 10px;
+  font-size: 20px;
+  border: none;
+}
+
+.filter-grey {
+  background-color: gray;
+  color: black;
+}
+
+.filter-sepia{
+  background-color: #d9d184;
+  color: #928728;
+}
+
+.filter-invert{
+  color: #c1dfff;
+  background-color: #11023f;
+}
+
+.modal.edit-modal .filter-grey:hover,
+.modal.edit-modal .filter-sepia:hover,
+.modal.edit-modal .filter-invert:hover {
+  background: #5a6268;
+}
+
+.modal.edit-modal .apply-changes {
+  color: #fff;
+  border: none;
+}
+
+
+.fa-rotate-left {
+  font-size: 20px;
+}
+
+/* Animations */
 @keyframes gradientShift {
   0% {
-      background-position: 0% 0%;
+    background-position: 0% 50%;
   }
   50% {
-      background-position: 100% 100%;
+    background-position: 100% 50%;
   }
   100% {
-      background-position: 0% 0%;
+    background-position: 0% 50%;
   }
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-content button:hover {
+  background-color: #f1f1f1;
 }

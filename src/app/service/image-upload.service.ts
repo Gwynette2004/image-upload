@@ -51,7 +51,7 @@ export class ImageUploadService {
       // })
 
 
-  updateImage(data: { imageId: number; filter: string; rotation: number }): Observable<any> {
+ updateImage(data: { imageId: number; filter: string; rotation: number }): Observable<any> {
     console.log('Sending update image request:', data); // Log the request data
     return this.http.post<any>(`${this.baseUrl}/updateimage`, data);
       }

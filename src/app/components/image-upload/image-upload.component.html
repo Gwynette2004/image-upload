@@ -14,7 +14,7 @@
   <div *ngIf="showUploadSection" class="upload-modal">
     <div class="upload-modal-content">
       <button class="close-btn" (click)="toggleUploadSection()">&times;</button>
-      <h3 class="insert">INSERT FILE HERE</h3>
+      <h3 class="insertF">INSERT FILE HERE</h3>
   
       <div class="drag-drop-area"
         (dragover)="onDragOver($event)"
@@ -38,7 +38,7 @@
   <div class="container">
     <div class="card">
       <div class="card-container">
-        <div class="image-container" *ngFor="let image of imageInfos | async" [ngStyle]="{'grid-row-end': 'span ' + getRandomRowSpan()}">
+        <div class="image-container" *ngFor="let image of imageInfos | async">
           <img [src]="getImageUrl(image.img)" alt="{{ image.imgName }}" height="80px" (click)="openPreview(getImageUrl(image.img), image.imgName, image.id)" class="image-item"/>
           <button (click)="deleteImage(image.id); onreload()" class="btn btn-danger btn-sm trash-icon">
             <i class="fa-solid fa-trash"></i>
@@ -53,35 +53,34 @@
 <!-- Preview Modal -->
 <div id="previewModal" class="modal preview-modal">
   <div class="modal-content">
-    <span class="close" (click)="closePreview()">&times;</span>
+    <div class="modal-header">
+
+      <div class="dropdown" (click)="toggleDropdown()">
+        <button class="dropbtn"><i class="fa-solid fa-ellipsis"></i></button>
+        <div class="dropdown-content" [class.show]="dropdownOpen">
+          <button (click)="openEditModal($event)" [disabled]="!selectedImage">
+            <i class="fa-solid fa-edit"></i> Edit
+          </button>
+          <button (click)="shareImage($event)" [disabled]="!selectedImage">
+            <i class="fa-solid fa-share"></i> Share
+          </button>
+          <button (click)="downloadImage($event)" *ngIf="selectedImage"><i class="fa-solid fa-download"></i>Download</button>
+        </div>
+      </div>
+
+      <span class="close" (click)="closePreview()"><i class="fa-solid fa-xmark"></i></span>
+    </div>
     <img #uploadedImage [src]="selectedImage" class="preview-image" [ngStyle]="{'filter': currentFilter}" alt="Selected Image"/>
     <p class="insertN">{{ selectedImageName }}</p>
-
-
-    <div class="dropdown">
-      <button class="dropbtn">Options</button>
-      <div class="dropdown-content">
-        <button class="edit-button" (click)="openEditModal()" [disabled]="!selectedImage">
-          <i class="fa-solid fa-edit"></i> Edit
-        </button>
-        <button class="share-button" (click)="shareImage()" [disabled]="!selectedImage">
-          <i class="fa-solid fa-share"></i> Share
-        </button>
-        <button (click)="downloadImage()" *ngIf="selectedImage">Download</button>
-      </div>
-    </div>
-
-
-
     <div class="comments-section">
-      <h3 class="insert">Comments</h3>
+      <h3 class="comment">Comments</h3>
+      <input type="text" [(ngModel)]="newComment" placeholder="Add a comment"/>
+      <button (click)="addComment()" class="commentB">Add Comment</button>
       <ul>
         <li *ngFor="let comment of comments">
-          <strong>{{ comment.username }}:</strong> {{ comment.comment }}
+          <strong class="username">{{ comment.username }}:</strong> {{ comment.comment }}
         </li>
       </ul>
-      <input type="text" [(ngModel)]="newComment" placeholder="Add a comment" />
-      <button (click)="addComment()">Add Comment</button>
     </div>
   </div>
 </div>
@@ -96,16 +95,15 @@
         <div class="rotate">
           <h3 class="insert">Try Rotate</h3>
           <button class="rotate-button" (click)="rotatePreviewImage()" [disabled]="!selectedImage">Rotate</button>
-          <button class="rotate-reset" (click)="resetPreviewImage()" [disabled]="!selectedImage">
-            <i class="fa-solid fa-rotate-left"></i>
-          </button>
+
+
         </div>
         <div class="color">
           <h3 class="insert">Try Colour Filter</h3>
           <button class="filter-grey" (click)="applyFilter('grayscale(100%)')" [disabled]="!selectedImage">Grayscale</button>
           <button class="filter-sepia" (click)="applyFilter('sepia(100%)')" [disabled]="!selectedImage">Sepia</button>
           <button class="filter-invert" (click)="applyFilter('invert(100%)')" [disabled]="!selectedImage">Invert</button>
-          <button class="filter-reset" (click)="applyFilter('none')" [disabled]="!selectedImage">
+          <button class="rotate" (click)="applyFilter('none')" [disabled]="!selectedImage">
             <i class="fa-solid fa-rotate-left"></i>
           </button>
           <button class="apply-changes" (click)="applyChanges()" [disabled]="!selectedImage">Apply Changes</button>
