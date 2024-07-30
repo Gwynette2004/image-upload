@@ -166,12 +166,15 @@ export class ImageUploadComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.files.length > 0) {
       const formData = new FormData();
       this.files.forEach(fileObj => formData.append('image[]', fileObj.file));
+      this.resetUploadState();
   
       this.uploadService.upload(formData).subscribe({
         next: (event: any) => {
           if (event instanceof HttpResponse) {
             this.message = event.body.message;
             this.refreshImageList();
+            this.resetUploadState();
+            this.files = [];
           }
         },
         error: (err) => {
@@ -179,6 +182,7 @@ export class ImageUploadComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         complete: () => {
           this.resetUploadState();
+          this.closeModal('uploadModal');
         }
       });
     } else {
@@ -201,6 +205,7 @@ export class ImageUploadComponent implements OnInit, AfterViewInit, OnDestroy {
     this.uploadService.deleteImage(id).subscribe({
       next: (response) => {
         console.log('Delete response:', response);
+        this.refreshImageList();
         if (response.status === 'success') {
           this.refreshImageList();
         } else {

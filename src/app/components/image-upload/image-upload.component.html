@@ -13,7 +13,7 @@
   <!-- Upload Modal -->
   <div *ngIf="showUploadSection" class="upload-modal">
     <div class="upload-modal-content">
-      <button class="close-btn" (click)="toggleUploadSection()">&times;</button>
+      <button class="close-btn" (click)="toggleUploadSection()"><i class="fa-solid fa-xmark"></i></button>
       <h3 class="insertF">INSERT FILE HERE</h3>
   
       <div class="drag-drop-area"
@@ -29,7 +29,7 @@
         </div>
       </div>
   
-      <button class="btn btn-success btn-sm" (click)="upload(); onreload()">Upload</button>
+      <button class="btn btn-success btn-sm" (click)="upload()" (click)="toggleUploadSection()">Upload</button>
       <button class="btn btn-secondary btn-sm" (click)="cancelEdit()">Cancel</button>
     </div>
   </div>
@@ -40,7 +40,7 @@
       <div class="card-container">
         <div class="image-container" *ngFor="let image of imageInfos | async">
           <img [src]="getImageUrl(image.img)" alt="{{ image.imgName }}" height="80px" (click)="openPreview(getImageUrl(image.img), image.imgName, image.id)" class="image-item"/>
-          <button (click)="deleteImage(image.id); onreload()" class="btn btn-danger btn-sm trash-icon">
+          <button (click)="deleteImage(image.id)" class="btn btn-danger btn-sm trash-icon">
             <i class="fa-solid fa-trash"></i>
           </button>
         </div>
@@ -54,7 +54,6 @@
 <div id="previewModal" class="modal preview-modal">
   <div class="modal-content">
     <div class="modal-header">
-
       <div class="dropdown" (click)="toggleDropdown()">
         <button class="dropbtn"><i class="fa-solid fa-ellipsis"></i></button>
         <div class="dropdown-content" [class.show]="dropdownOpen">
@@ -67,29 +66,37 @@
           <button (click)="downloadImage($event)" *ngIf="selectedImage"><i class="fa-solid fa-download"></i>Download</button>
         </div>
       </div>
-
       <span class="close" (click)="closePreview()"><i class="fa-solid fa-xmark"></i></span>
     </div>
-    <img #uploadedImage [src]="selectedImage" class="preview-image" [ngStyle]="{'filter': currentFilter}" alt="Selected Image"/>
-    <p class="insertN">{{ selectedImageName }}</p>
-    <div class="comments-section">
-      <h3 class="comment">Comments</h3>
-      <input type="text" [(ngModel)]="newComment" placeholder="Add a comment"/>
-      <button (click)="addComment()" class="commentB">Add Comment</button>
-      <ul>
-        <li *ngFor="let comment of comments">
-          <strong class="username">{{ comment.username }}:</strong> {{ comment.comment }}
-        </li>
-      </ul>
+    <div class="modal-body">
+      <div class="image-container">
+        <img #uploadedImage [src]="selectedImage" class="preview-image" [ngStyle]="{'filter': currentFilter}" alt="Selected Image"/>
+        <p class="insertN">{{ selectedImageName }}</p>
+      </div>
+      <div class="comments-section">
+          <h3 class="comment">Comments</h3>
+          <div class="comment-form">
+            <input type="text" [(ngModel)]="newComment" placeholder="Add a comment"/>
+            <button (click)="addComment()" class="commentB">Add Comment</button>
+          </div>
+          <div class="comment-list">
+            <ul>
+              <li *ngFor="let comment of comments">
+                <strong class="username">{{ comment.username }}:</strong> {{ comment.comment }}
+              </li>
+            </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 
+
   <!-- Edit Modal -->
   <div id="editModal" class="modal edit-modal">
     <div class="modal-content">
-      <span class="close" (click)="closeEditModal()">&times;</span>
+      <span class="close" (click)="closeEditModal()"><i class="fa-solid fa-xmark"></i></span>
       <img #editImage [src]="selectedImage" class="preview-image" [ngStyle]="{'filter': currentFilter}" alt="Selected Image"/>
       <div class="edit-actions">
         <div class="rotate">
@@ -106,7 +113,7 @@
           <button class="rotate" (click)="applyFilter('none')" [disabled]="!selectedImage">
             <i class="fa-solid fa-rotate-left"></i>
           </button>
-          <button class="apply-changes" (click)="applyChanges()" [disabled]="!selectedImage">Apply Changes</button>
+          <button class="apply-changes" (click)="applyChanges()" [disabled]="!selectedImage" (click)="closePreview()">Apply Changes</button>
         </div>
       </div>
     </div>

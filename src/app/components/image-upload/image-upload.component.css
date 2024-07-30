@@ -28,9 +28,9 @@ h1.h1 {
   margin: 0 auto;
   margin-top: 20px;
   padding: 20px;
-  background-color: black;
+  background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
-  color: black;
+  color: white;
   border-radius: 20px;
 }
 
@@ -54,7 +54,7 @@ h1.h1 {
   align-items: center;
   justify-content: space-between;
   padding: 10px 20px;
-  background-color: black;
+  background-color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
@@ -182,7 +182,7 @@ h1.h1 {
 
 /* Card Styles */
 .card {
-  background: black;
+  background: white;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -247,35 +247,32 @@ h1.h1 {
 
 /* Modal Styles */
 .modal {
-  align-self: center;
-  margin: auto;
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  background: rgba(0, 0, 0, 0.5);
-  overflow-y: auto; /* Allow scrolling in modal */
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Offset by half of its own size */
+  background: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+  z-index: 1000; /* Sit on top */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: hidden; /* Disable scrolling */
   align-items: center;
   justify-content: center;
-  z-index: 1000;
 }
 
 .modal-content {
-  position: relative;
-  background-color: black;
-  margin: 20px auto; /* Adjusted margin */
-  padding: 10px; /* Reduced padding */
-  border-radius: 15px;
-  border: 1px solid black;
-  width: 90%; /* Full width with some margin */
-  max-width: 800px; /* Maximum width for larger screens */
-  text-align: center;
-  box-sizing: border-box;
-  text-align: left;
-
+  position: relative; /* For positioning the close button */
+  background-color: white;
+  width: 900px; /* Fixed width */
+  height: 600px; /* Fixed height */
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  margin-top: 70px;
 }
 
 .close {
@@ -291,15 +288,26 @@ h1.h1 {
   color: #dc3545;
 }
 
-.preview-image {
-  max-width: 100%;
-  border-radius: 10px;
-  display: block;
-  margin: 0 auto; /* Center the image horizontally */
-  background-color: black;
-  margin-top: 20px;
+.image-container {
+  text-align: center; /* Center image container */
+  flex: 1;
 }
 
+.modal-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px; /* Adjust gap as needed */
+  flex: 1;
+}
+
+.preview-image {
+  max-width: 70%;
+  max-height: 50%;
+  height: auto;
+  border-radius: 10px;
+  margin: auto;
+}
 
 .comment {
   font-weight: 600;
@@ -311,28 +319,205 @@ h1.h1 {
   margin-bottom: -10px;
 }
 
-.insertN
-  {
-    text-align: left;
-    margin-left: 15px;
-    margin-top: 15px;
-    font-weight: 600;
-    font-size: 35px;
-    background: linear-gradient(45deg, #180161, #4F1787, #EB3678, #FB773C);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.comments-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 
-  }
+.comment-form {
+  margin-bottom: 20px; /* Space between form and comments list */
+}
+
+.commentB {
+  align-self: flex-start; /* Align button to the start */
+}
+
+.insertN {
+  text-align: center;
+  margin: 15px auto 0 auto;
+  font-weight: 600;
+  font-size: 35px;
+  background: linear-gradient(45deg, #180161, #4F1787, #EB3678, #FB773C);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.username {
+  text-align: left;
+  color: black;
+  font-size: 20px;
+  align-items: left;
+  align-self: left;
+  margin-top: 0px;
+}
+
+.comments-section button {
+  margin-left: 270px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 20px;
+  background-color: #4F1787;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 6s ease, transform 0.8s ease; /* Add transition for background-color and transform */
+  background-size: 200% 200%; /* For smoother gradient transition */
+  background-position: 0% 50%; /* Initial background position */
+  background-image: linear-gradient(45deg, #4F1787, #4F1787); /* Initial background image */
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Offset by half of its own size */
+  background: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+  z-index: 1000; /* Sit on top */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: hidden; /* Disable scrolling */
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  position: relative; /* For positioning the close button */
+  background-color: white;
+  width: 900px; /* Fixed width */
+  height: 600px; /* Fixed height */
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  margin-top: 70px;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+.close:hover {
+  color: #dc3545;
+}
+
+.image-container {
+  text-align: center; /* Center image container */
+  flex: 1;
+}
+
+.modal-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px; /* Adjust gap as needed */
+  flex: 1;
+}
+
+.preview-image {
+  max-width: 70%;
+  max-height: 50%;
+  height: auto;
+  border-radius: 10px;
+  margin: auto;
+}
+
+.comment {
+  font-weight: 600;
+  color: #EB3678;
+  font-size: 30px;
+  text-align: left;
+  margin-left: 17px;
+  margin-top: 20px;
+  margin-bottom: -10px;
+}
+
+.comments-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-form {
+  margin-bottom: 20px; /* Space between form and comments list */
+}
+
+.comment-list {
+  flex: 1;
+  overflow-y: auto; /* Make the comments list scrollable */
+  max-height: 300px;
+  max-width: 100%;
+}
+
+.comments-section button {
+  margin-left: 300px;
+  position: sticky;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 20px;
+  background-color: #4F1787;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 6s ease, transform 0.8s ease; /* Add transition for background-color and transform */
+  background-size: 200% 200%; /* For smoother gradient transition */
+  background-position: 0% 50%; /* Initial background position */
+  background-image: linear-gradient(45deg, #4F1787, #4F1787); /* Initial background image */
+}
+
+.comments-section button:hover {
+  background-position: 100% 50%; /* Background position on hover */
+  background-image: linear-gradient(45deg, #180161, #4F1787, #EB3678, #FB773C); /* Gradient on hover */
+  transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+.comments-section input[type="text"] {
+  width: 390px; /* Adjust width to fit within the section */
+  padding: 10px;
+  margin-left: 45px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+  background-color: whitesmoke; /* Background color for the input field */
+  color: black; /* Text color for the input field */
+}
+
+.comments-section input[type="text"]::placeholder {
+  color: #bbb; /* Placeholder text color */
+}
+
+.comments-section ul {
+  margin-left: 10px;
+  margin-top: 20px;
+  list-style: none;
+  padding: 0;
+}
+
+.comments-section li {
+  color: black;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.commenti {
+  color: black;
+}
+
 .dropdown {
   margin-top: 10px; /* Add margin to separate dropdown from image */
 }
 
 
 
-.comments-section {
-  margin-top: 10px; /* Add margin to separate comments from other elements */
-}
 
 .rotate-button,
 .rotate-reset,
@@ -399,7 +584,7 @@ h1.h1 {
 }
 
 .upload-modal-content {
-  background: black;
+  background: white;
   padding: 20px;
   border-radius: 20px;
   width: 80%;
@@ -418,8 +603,9 @@ h1.h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-
 }
+
+
 
 /* Add this to your existing CSS */
 .modal-header {
@@ -427,13 +613,13 @@ h1.h1 {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: black;
-  color: black;
+  background-color: white;
+  color: white;
 }
 
 .modal-header .dropdown {
   margin: 0;
-  background-color: black;
+  background-color: white;
 }
 
 .modal-header .close {
@@ -527,7 +713,7 @@ h1.h1 {
 .dropdown-content {
   margin-top: 10px;
   background-color: #180161; /* Changed to a visible color for the dropdown */
-  color: black; /* Ensure text color is visible */
+  color: white; /* Ensure text color is visible */
   display: none;
   position: absolute;
   min-width: 160px;
@@ -577,97 +763,15 @@ h1.h1 {
   display: block;
 }
 
-.username {
-  text-align: left;
-  color: white;
-  font-size: 20px;
-  align-items: left;
-  align-self: left;
-  margin-top: 0px;
-}
-
-
-
-.comments-section button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 20px;
-  background-color: #4F1787;
-  margin-left: 15px;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 6s ease, transform 0.8s ease; /* Add transition for background-color and transform */
-  background-size: 200% 200%; /* For smoother gradient transition */
-  background-position: 0% 50%; /* Initial background position */
-  background-image: linear-gradient(45deg, #4F1787, #4F1787); /* Initial background image */
-}
-
-.comments-section button:hover {
-  background-position: 100% 50%; /* Background position on hover */
-  background-image: linear-gradient(45deg, #180161, #4F1787, #EB3678, #FB773C); /* Gradient on hover */
-  transform: scale(1.05); /* Slightly enlarge the button */
-}
-
-.comments-section input[type="text"] {
-  width: calc(92% - 120px); /* Adjust width to fit within the section */
-  padding: 10px;
-  margin-left: 15px;
-  margin-top: 20px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
-  background-color: #444; /* Background color for the input field */
-  color: white; /* Text color for the input field */
-}
-
-.comments-section input[type="text"]::placeholder {
-  color: #bbb; /* Placeholder text color */
-}
-
-.comments-section ul {
-  margin-left: 10px;
-  margin-top: 20px;
-  list-style: none;
-  padding: 0;
-}
-
-.comments-section li {
-  color: white;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-.commenti {
-  color: white;;
-}
 
 /* Edit Modal */
-.modal.edit-modal {
-  align-self: left;
-  margin: auto;
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  background: rgba(0, 0, 0, 0.5);
-  overflow-y: auto;
-  align-items: left;
-  justify-content: left;
-  z-index: 1000;
-}
-
-.modal.edit-modal .modal-content {
+.modal-content {
   position: relative;
-  background-color: black;
+  background-color: white;
   margin: 20px auto;
   padding: 10px;
   border-radius: 15px;
-  border: 1px solid black;
-  width: 90%;
-  max-width: 800px;
+  border: 1px solid white;
   box-sizing: border-box;
   text-align: left;
 }
@@ -767,7 +871,7 @@ h1.h1 {
 
 .filter-grey {
   background-color: gray;
-  color: black;
+  color: white;
 }
 
 .filter-sepia{

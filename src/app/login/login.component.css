@@ -20,8 +20,8 @@ body {
   align-items: center;
   justify-content: center;
   padding: 50px;
-  color: white;
-  background: black; 
+  color: #180161;
+  background: white; 
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   animation: fadeIn 1.5s ease-in-out;
   backdrop-filter: blur(10px);
@@ -67,8 +67,8 @@ h1 {
   padding: 10px 10px 10px 40px;
   border: none;
   border-radius: 10px;
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
+  background: white;
+  color: black;
   font-size: 16px;
 }
 
@@ -77,7 +77,7 @@ h1 {
   top: 50%;
   left: 10px;
   transform: translateY(-50%);
-  color: white;
+  color: #180161;
   font-size: 20px;
 }
 
